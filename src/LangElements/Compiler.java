@@ -22,6 +22,7 @@ public class Compiler {
     }
     public static void printERR(){
         System.out.println(compileERRS);
+
     }
 
 
