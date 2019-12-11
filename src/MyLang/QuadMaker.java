@@ -72,6 +72,6 @@ public class QuadMaker extends myLangBaseListener {
 
     @Override
     public void exitSi_a(myLangParser.Si_aContext ctx) {
-        Compiler.Quads.add(Quadreplet.QuadBuilder(""));
+        Compiler.Quads.add(Quadreplet.QuadBuilder("JM_0"));
     }
 }

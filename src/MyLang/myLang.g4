@@ -18,9 +18,9 @@ type: (MC_INT | MC_FLOAT | MC_STRING) ;
 
 affect : IDF ':=' exp ;
 
-si : 'si' '(' exp ')' si_a 'alors' '{' inst+ '}' si_b ('sinon' '{' inst+ '}' )* ;
-si_a : ;
-si_b : ;
+si : 'si' '(' exp ')' si_a 'alors' '{' inst+ '}' si_b ('sinon' '{' inst+ '}' )? ;
+si_a : ; // HELPERS
+si_b : ; //
 
 exp : exp MUL exp
     | exp DIV exp
