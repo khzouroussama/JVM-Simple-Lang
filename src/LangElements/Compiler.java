@@ -12,6 +12,7 @@ public class Compiler {
     public static LinkedList<Err> compileERRS ;
 
     public Compiler() {
+
         TS = new LinkedList<>();
         Quads =new LinkedList<>();
         compileERRS = new LinkedList<>();
