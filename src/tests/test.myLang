@@ -1,0 +1,23 @@
+import Small_Java.lang;
+
+protected sj_class smallJava {
+
+    MainSj{
+      sj_int x := 5, z ;
+      sj_string y:= "fgdfs",kh:="lkhkj"²;
+      sj_int y,l;
+      y := 5 ;
+
+      x:=1.12/5-4;
+      kjkj:= 565 ;
+      z := 5 * true;
+
+      sj_Out("bla bla ..%d%s",x);
+
+      si ( 5 + 6 = 8 ) alors {
+        l := 5+5* "sdg" ;
+      } sinon {
+        sj_int b := 5 ;
+      }
+    }
+}

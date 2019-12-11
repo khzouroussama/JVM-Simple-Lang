@@ -1,0 +1,12 @@
+import Small_Java.lang ;
+
+protected sj_class SmallJava {
+
+    MainSj{
+      sj_int x , y := 3+4>true , z ;
+      y := 5*2 ;
+      x := 1.12/5-4 ;
+      y := 565 ;
+      z := 0+(1+2)*3+"4" ;
+    }
+}
