@@ -8,8 +8,7 @@ protected sj_class SmallJava {
       si ( 5 = 5 ) alors {
         x := 5;
       } sinon {
-        x := 3 ;
+        x := 3 + 3 ;
       }
-
     }
 }

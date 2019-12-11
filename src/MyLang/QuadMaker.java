@@ -12,6 +12,7 @@ public class QuadMaker extends myLangBaseListener {
     int tmpNb2 = 0 ; // letat pass  E4
     private int qc = 0 ;
     private Stack<Integer> tmpStack = new Stack<>(){{push(0);}};
+    private Stack<Quadreplet> ifStack = new Stack<>();
 
     @Override
     public void exitS(myLangParser.SContext ctx) {
@@ -72,6 +73,14 @@ public class QuadMaker extends myLangBaseListener {
 
     @Override
     public void exitSi_a(myLangParser.Si_aContext ctx) {
-        Compiler.Quads.add(Quadreplet.QuadBuilder("JM_0"));
+        Quadreplet ifQuad = Quadreplet.QuadBuilder("J0","#T"+tmpStack.pop(),"","");
+        Compiler.Quads.add(ifQuad);
+        ifStack.push(ifQuad);
+    }
+
+    @Override
+    public void exitSi_b(myLangParser.Si_bContext ctx) {
+        Compiler.Quads.add(Quadreplet.QuadBuilder("","","",""));
+        ifStack.pop().set4(Compiler.Quads.size() +"");
     }
 }
