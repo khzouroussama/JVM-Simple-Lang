@@ -4,7 +4,7 @@ protected sj_class smallJava {
 
     MainSj{
       sj_int x := 5, z ;
-      sj_string y:= "fgdfs",kh:="lkhkj"²;
+      sj_string y:= "fgdfs",kh:="blablaOUSSAMA";
       sj_int y,l;
       y := 5 ;
 
