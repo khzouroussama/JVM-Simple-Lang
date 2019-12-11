@@ -25,7 +25,7 @@ public class Quadreplet {
 
     @Override
     public String toString() {
-        return "\nQ" +
+        return "" +
                 "" + Arrays.toString(elt);
     }
 

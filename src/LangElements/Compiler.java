@@ -17,6 +17,7 @@ public class Compiler {
         compileERRS = new LinkedList<>();
     }
 
+    // Console printer
     public static void printTS(){
         System.out.println(TS);
     }
@@ -24,7 +25,10 @@ public class Compiler {
         System.out.println(compileERRS);
 
     }
+    public static void printQuads(){
+        for (int i = 0; i < Quads.size(); i++) System.out.println("  Q-"+i+":"+Quads.get(i));
 
+    }
 
     public static boolean TScontains(String id){
         for (Symbol s: TS) if (s.getId().equals(id)) return true ;
@@ -39,6 +43,14 @@ public class Compiler {
 
     public static Quadreplet QuadGet(int i){
         return Quads.get(i);
+    }
+
+
+    // function that transforms Quadreplet into JVMAssembly ( via jasmin )
+
+    public static void GenerateObjectCode(String path){
+
+
     }
 
 }

@@ -13,11 +13,12 @@ public class QuadMaker extends myLangBaseListener {
     private int qc = 0 ;
     private Stack<Integer> tmpStack = new Stack<>(){{push(0);}};
     private Stack<Quadreplet> ifStack = new Stack<>();
+    private Stack<Quadreplet> elseStack = new Stack<>();
 
     @Override
     public void exitS(myLangParser.SContext ctx) {
         Compiler.Quads.add( new Quadreplet(new String[]{"END","","",""}));
-        System.out.println(Compiler.Quads);
+        Compiler.printQuads();
     }
 
     @Override
@@ -73,14 +74,21 @@ public class QuadMaker extends myLangBaseListener {
 
     @Override
     public void exitSi_a(myLangParser.Si_aContext ctx) {
-        Quadreplet ifQuad = Quadreplet.QuadBuilder("J0","#T"+tmpStack.pop(),"","");
+        Quadreplet ifQuad = Quadreplet.QuadBuilder("JZ","#T"+tmpStack.pop(),"","");
         Compiler.Quads.add(ifQuad);
         ifStack.push(ifQuad);
     }
 
     @Override
     public void exitSi_b(myLangParser.Si_bContext ctx) {
-        Compiler.Quads.add(Quadreplet.QuadBuilder("","","",""));
+        Quadreplet elseQuad= Quadreplet.QuadBuilder("BR","","","") ;
+        Compiler.Quads.add(elseQuad);
+        elseStack.push(elseQuad);
         ifStack.pop().set4(Compiler.Quads.size() +"");
+    }
+
+    @Override
+    public void exitSi(myLangParser.SiContext ctx) {
+        elseStack.pop().set4(Compiler.Quads.size()+"");
     }
 }
