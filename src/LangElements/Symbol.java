@@ -2,12 +2,15 @@ package LangElements;
 
 public class Symbol {
 
+    public static int numSymbol = 1;
+    private int num ;
     private String id ;
     private Types type ;
     private int size ;
     private boolean declared ;
 
     public Symbol(String id, Types type, int size, boolean declared) {
+        this.num = numSymbol++ ;
         this.id = id;
         this.type = type;
         this.size = size;
@@ -31,6 +34,10 @@ public class Symbol {
         return size;
     }
 
+    public int getNum() {
+        return num;
+    }
+
     public void setSize(int size) {
         this.size = size;
     }
@@ -46,7 +53,8 @@ public class Symbol {
     @Override
     public String toString() {
         return "\nSymbol{" +
-                "id='" + id + '\'' +
+                "num=" + num +
+                ", id='" + id + '\'' +
                 ", type=" + type +
                 ", size=" + size +
                 ", declared=" + declared +

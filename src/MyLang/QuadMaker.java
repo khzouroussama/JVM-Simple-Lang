@@ -8,8 +8,7 @@ import java.util.Stack;
 import java.util.zip.CheckedOutputStream;
 
 public class QuadMaker extends myLangBaseListener {
-    private int tmpNb = 0 ; // E1 E2
-    int tmpNb2 = 0 ; // letat pass  E4
+    private static int tmpNb = 0 ;
     private int qc = 0 ;
     private Stack<Integer> tmpStack = new Stack<>(){{push(0);}};
     private Stack<Quadreplet> ifStack = new Stack<>();
@@ -19,6 +18,8 @@ public class QuadMaker extends myLangBaseListener {
     public void exitS(myLangParser.SContext ctx) {
         Compiler.Quads.add( new Quadreplet(new String[]{"END","","",""}));
         Compiler.printQuads();
+        System.out.println(Compiler.GenerateObjectCode(""));
+
     }
 
     @Override
@@ -90,5 +91,10 @@ public class QuadMaker extends myLangBaseListener {
     @Override
     public void exitSi(myLangParser.SiContext ctx) {
         elseStack.pop().set4(Compiler.Quads.size()+"");
+    }
+
+
+    public static int getTmpNb() {
+        return tmpNb;
     }
 }

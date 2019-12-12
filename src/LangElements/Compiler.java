@@ -46,11 +46,29 @@ public class Compiler {
     }
 
 
+
     // function that transforms Quadreplet into JVMAssembly ( via jasmin )
 
-    public static void GenerateObjectCode(String path){
+    public static LinkedList<String> GenerateObjectCode(String path){
 
-
+        // JVM instructions ( as a start we will put every thing in the main )
+        LinkedList<String> JVM_insts = new LinkedList<>();
+        // using TS
+        // Declaring variables
+        for (Symbol symbol:TS) {
+            if (symbol.getType() != null)
+            switch (symbol.getType()) {
+                case INT:
+                    JVM_insts.add("iconst_0 \n");
+                    JVM_insts.add("istore_"+ symbol.getNum()+"\n");
+                    break;
+                case FLOAT:
+                    break;
+                case STRING:
+                    break;
+            }
+        }
+        return JVM_insts;
     }
 
 }
