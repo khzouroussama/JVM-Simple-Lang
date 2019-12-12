@@ -11,6 +11,10 @@ public class Compiler {
     public static LinkedList<Quadreplet> Quads ;
     public static LinkedList<Err> compileERRS ;
 
+    /**
+     * the Compiler
+     * Contains SymboleTable
+     */
     public Compiler() {
         TS = new LinkedList<>();
         Quads =new LinkedList<>();
@@ -49,6 +53,11 @@ public class Compiler {
 
     // function that transforms Quadreplet into JVMAssembly ( via jasmin )
 
+    /**
+     *
+     * @param path
+     * @return
+     */
     public static LinkedList<String> GenerateObjectCode(String path){
 
         // JVM instructions ( as a start we will put every thing in the main )
@@ -60,7 +69,7 @@ public class Compiler {
             switch (symbol.getType()) {
                 case INT:
                     JVM_insts.add("iconst_0 \n");
-                    JVM_insts.add("istore_"+ symbol.getNum()+"\n");
+                    JVM_insts.add("istore "+ symbol.getNum()+"\n");
                     break;
                 case FLOAT:
                     break;

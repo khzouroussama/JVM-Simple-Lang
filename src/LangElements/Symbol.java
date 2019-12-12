@@ -38,6 +38,9 @@ public class Symbol {
         return num;
     }
 
+    public void setType(Types type) {
+        this.type = type;
+    }
     public void setSize(int size) {
         this.size = size;
     }

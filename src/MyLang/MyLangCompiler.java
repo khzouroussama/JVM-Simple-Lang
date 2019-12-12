@@ -2,7 +2,6 @@ package MyLang;
 
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
 import LangElements.Compiler;
 
 public class MyLangCompiler extends Compiler{
@@ -17,7 +16,7 @@ public class MyLangCompiler extends Compiler{
             // Start parsing
 
 
-            parser.addParseListener(new MyListner());
+            parser.addParseListener(new SyntaxCheck());
             parser.addParseListener(new QuadMaker());
 
             parser.s();

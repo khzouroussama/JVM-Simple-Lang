@@ -2,10 +2,9 @@ package MyLang;
 
 import LangElements.Compiler;
 import LangElements.Quadreplet;
-import org.antlr.v4.runtime.tree.TerminalNode;
+import LangElements.Symbol;
 
 import java.util.Stack;
-import java.util.zip.CheckedOutputStream;
 
 public class QuadMaker extends myLangBaseListener {
     private static int tmpNb = 0 ;
@@ -64,12 +63,15 @@ public class QuadMaker extends myLangBaseListener {
 
             // Always temp at the end of EXP
             quad.set4( "#T"+(tmpNb));
+            // Add the tmp into TS (symbole table)
+            Compiler.TS.add(new Symbol("#T"+tmpNb , SyntaxCheck.typeOP1 , 10,true) );
             // Store the temp in the stack
             tmpStack.push( tmpNb++ );
             // store the cuurent quad to use it in the affect routin
             qc = Compiler.Quads.size() ;
             Compiler.Quads.add(quad);
         }
+
     }
 
 

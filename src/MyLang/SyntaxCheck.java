@@ -4,9 +4,12 @@ import LangElements.Compiler;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-public class MyListner extends myLangBaseListener {
+public class SyntaxCheck extends myLangBaseListener {
 
-    Types typeOP1 , typesOP2 ;
+    // a shared variable that can be used between listners (Quad Maker // syntax check)
+    // the actual exp type stored in typeOP1
+    static Types typeOP1 , typesOP2 ;
+
     int nbop = 0 ;
 
 
@@ -14,7 +17,7 @@ public class MyListner extends myLangBaseListener {
     public void exitS(myLangParser.SContext ctx) {
         // verify that class name starts by Capital letter
         if ( ! Character.isUpperCase(ctx.IDF().getText().charAt(0)) )
-            Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.CLASS_CAPITAL_START , "Class name <"+ctx.IDF().getText()+"> must start by a capital letter.")); ;
+            Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.CLASS_CAPITAL_START , "Class name <"+ctx.IDF().getText()+"> must start by a capital letter."));
 
 
         System.out.println("<Fin de Compilation> With  " +Compiler.compileERRS.size()+" Erreurs");
@@ -96,7 +99,7 @@ public class MyListner extends myLangBaseListener {
 
     @Override
     public void exitExp(myLangParser.ExpContext ctx) {
-            nbop = 1 ;
+        nbop = 1 ;
     }
 
 
@@ -144,9 +147,8 @@ public class MyListner extends myLangBaseListener {
         if (typeOP1 == null) return null ;
         else
         switch (typeOP1){
-            case INT:
-            case FLOAT:
-                return (typesOP2 == Types.FLOAT || typesOP2 == Types.INT )? Types.FLOAT : null ;
+            case INT: return ( typesOP2 == Types.INT )? Types.INT : ( typesOP2 == Types.FLOAT )? Types.FLOAT: null ;
+            case FLOAT: return (typesOP2 == Types.FLOAT || typesOP2 == Types.INT )? Types.FLOAT : null ;
             case STRING:  return (typesOP2 == Types.STRING )? Types.STRING : null ;
             case BOOLEAN: return (typesOP2 == Types.BOOLEAN )? Types.BOOLEAN : null ;
         }
