@@ -41,8 +41,16 @@ public class Compiler {
         return false ;
     }
 
+
+    /**
+     *
+     * @param id name of var (IDF) or a value it self
+     * @return a symbol represntation (From TS if IDF , newConst otherwise)
+     */
     public static Symbol TSget(String id){
-        for (Symbol s: TS) if (s.getId().equals(id)) return s ;
+        if (Symbol.isValue(id) != null)
+            return Symbol._new_cnst_(id);
+        else for (Symbol s: TS) if (s.getId().equals(id)) return s ;
         return null ;
     }
 
@@ -92,12 +100,18 @@ public class Compiler {
         for (int i = 0; i < Quads.size(); i++) {
             Quadreplet thisQuad = Quads.get(i);
             switch (thisQuad.get()[0]) {
-                case "+" :
-                    JVM_insts.addAll(JVMinst.add(TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2])));
+                case "+"  :
+                    JVM_insts.addAll(JVMinst.add( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
                     break;
-                case "-" : break;
-                case "*" : break;
-                case "/" : break;
+                case "-" :
+                    JVM_insts.addAll(JVMinst.sub( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
+                    break;
+                case "*" :
+                    JVM_insts.addAll(JVMinst.mul( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
+                    break;
+                case "/" :
+                    JVM_insts.addAll(JVMinst.div( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
+                    break;
             }
         }
 

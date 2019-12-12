@@ -19,7 +19,8 @@ public class JVMinst {
     }
 
     public static String load(Symbol s){
-        return instType.get(s.getType())+"load "+s.getNum();
+        if (s.is_cnst_())  return "ldc "+s.get_cnst_value_() ;
+        else return instType.get(s.getType())+"load "+s.getNum();
     }
 
     /**
@@ -51,6 +52,66 @@ public class JVMinst {
         return JVMinsts;
     }
 
+    public static LinkedList<String> sub(Symbol s1 , Symbol s2){
+        LinkedList<String> JVMinsts = new LinkedList<>();
+
+        if (s1.getType() == Types.FLOAT || s2.getType() ==Types.FLOAT ){
+            JVMinsts.add(load(s1));
+            if (s1.getType() == Types.INT )
+                JVMinsts.add("i2f");
+
+            JVMinsts.add(load(s2));
+            if (s2.getType() == Types.INT )
+                JVMinsts.add("i2f");
+            JVMinsts.add("fsub");
+        }
+
+        if (s1.getType() == Types.INT && s2.getType() ==Types.INT ){
+            JVMinsts.add(load(s1));
+            JVMinsts.add(load(s2));
+            JVMinsts.add("isub");
+        }
+
+        return JVMinsts;
+    }
+
+    public static LinkedList<String> mul(Symbol s1 , Symbol s2){
+        LinkedList<String> JVMinsts = new LinkedList<>();
+
+        if (s1.getType() == Types.FLOAT || s2.getType() ==Types.FLOAT ){
+            JVMinsts.add(load(s1));
+            if (s1.getType() == Types.INT )
+                JVMinsts.add("i2f");
+
+            JVMinsts.add(load(s2));
+            if (s2.getType() == Types.INT )
+                JVMinsts.add("i2f");
+            JVMinsts.add("fmul");
+        }
+
+        if (s1.getType() == Types.INT && s2.getType() ==Types.INT ){
+            JVMinsts.add(load(s1));
+            JVMinsts.add(load(s2));
+            JVMinsts.add("imul");
+        }
+
+        return JVMinsts;
+    }
+
+    public static LinkedList<String> div(Symbol s1 , Symbol s2){
+        LinkedList<String> JVMinsts = new LinkedList<>();
+
+            JVMinsts.add(load(s1));
+            if (s1.getType() == Types.INT )
+                JVMinsts.add("i2f");
+
+            JVMinsts.add(load(s2));
+            if (s2.getType() == Types.INT )
+                JVMinsts.add("i2f");
+            JVMinsts.add("fdiv");
+
+        return JVMinsts;
+    }
 
 
 

@@ -22,11 +22,7 @@ public class MyLangCompiler extends Compiler{
             parser.s();
 
             JVMClassTemplate template = new JVMClassTemplate("Test" , Compiler.GenerateObjectCode(""),true,10);
-        System.out.println(JVMClassTemplate.jasminJVM);
-
-
-
-
+            System.out.println(JVMClassTemplate.jasminJVM);
 
     }
 
