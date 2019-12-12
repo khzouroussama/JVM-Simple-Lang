@@ -29,6 +29,10 @@ public class Quadreplet {
                 "" + Arrays.toString(elt);
     }
 
+    public String[] get() {
+        return elt;
+    }
+
     public void set1(String elt) {
         this.elt[0] = elt;
     }

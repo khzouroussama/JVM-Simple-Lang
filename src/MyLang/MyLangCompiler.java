@@ -1,5 +1,6 @@
 package MyLang;
 
+import JVMHelpers.JVMClassTemplate;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import LangElements.Compiler;
@@ -15,11 +16,15 @@ public class MyLangCompiler extends Compiler{
             myLangParser parser = new myLangParser(new CommonTokenStream(lexer));
             // Start parsing
 
-
             parser.addParseListener(new SyntaxCheck());
             parser.addParseListener(new QuadMaker());
 
             parser.s();
+
+            JVMClassTemplate template = new JVMClassTemplate("Test" , Compiler.GenerateObjectCode(""),true,10);
+        System.out.println(JVMClassTemplate.jasminJVM);
+
+
 
 
 

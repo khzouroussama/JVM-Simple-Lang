@@ -3,20 +3,10 @@ import Small_Java.lang ;
 protected sj_class SmallJava {
 
     MainSj{
-      sj_int x , y := 3 , z ;
+      sj_int x , z ;
+      sj_float  y  ;
 
-      si ( 5 = 5 ) alors {
-        x := 5;
-        x := 5;
-        x := 5;
-              si ( 5 = 5 ) alors {
-                x := 5;
-                x := 5 + 2.2 + 5;
-              } sinon {
-                x := 3 + 3 ;
-              }
-      } sinon {
-        x := 3 + 3 ;
-      }
+      x :=  y + x ;
+
     }
 }
