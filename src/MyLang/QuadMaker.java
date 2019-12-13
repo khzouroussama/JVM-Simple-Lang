@@ -13,6 +13,10 @@ public class QuadMaker extends myLangBaseListener {
     private Stack<Quadreplet> ifStack = new Stack<>();
     private Stack<Quadreplet> elseStack = new Stack<>();
 
+    public static void init(){
+        tmpNb =0 ;
+    }
+
     @Override
     public void exitS(myLangParser.SContext ctx) {
         Compiler.Quads.add( new Quadreplet(new String[]{"END","","",""}));

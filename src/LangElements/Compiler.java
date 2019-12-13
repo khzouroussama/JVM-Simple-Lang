@@ -2,6 +2,7 @@ package LangElements;
 
 import JVMHelpers.JVMClassTemplate;
 import JVMHelpers.JVMinst;
+import MyLang.QuadMaker;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,8 +24,8 @@ public class Compiler {
         TS = new LinkedList<>();
         Quads =new LinkedList<>();
         compileERRS = new LinkedList<>();
-
         Symbol.numSymbol = 0 ;
+        QuadMaker.init();
     }
 
     // Console printer
