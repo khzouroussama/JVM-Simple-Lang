@@ -45,20 +45,20 @@ Label2:
     .limit locals 100 
     ; variables Declaration goes here .. 
     ldc 0 
+    istore 1
+    ldc 0 
     istore 2
-    ldc 0 
-    istore 3
     ldc 0.0
-    fstore 4
+    fstore 3
     ldc 0 
-    istore 5
+    istore 4
     ldc 0.0
-    fstore 6
+    fstore 5
     ; start excution ... 
-    iload 2
+    iload 1
     ldc 5
     imul
-    iload 5
+    iload 4
     i2f
     ldc 3.2
     fdiv

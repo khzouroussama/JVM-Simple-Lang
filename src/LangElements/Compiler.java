@@ -1,5 +1,6 @@
 package LangElements;
 
+import JVMHelpers.JVMClassTemplate;
 import JVMHelpers.JVMinst;
 
 import java.util.Arrays;
@@ -22,6 +23,8 @@ public class Compiler {
         TS = new LinkedList<>();
         Quads =new LinkedList<>();
         compileERRS = new LinkedList<>();
+
+        Symbol.numSymbol = 0 ;
     }
 
     // Console printer
@@ -37,7 +40,10 @@ public class Compiler {
     }
 
     public static String getQuadJson(){
-        return "{ \"quads\" : " + Quads +"}";
+        return "{ \"quads\" : " + Quads +"  ,"+
+                " \"JVM\" : " + '\"'+new JVMClassTemplate("Test" , Compiler.GenerateObjectCode(""),true,10).jasminJVM.replaceAll("\n","##") +'\"' +
+                "}"
+                ;
     }
 
     public static boolean TScontains(String id){

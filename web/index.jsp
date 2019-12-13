@@ -43,9 +43,12 @@
       <li class="tab"><a class=" waves-effect waves-light " href="#tab2">Quadreplet.quad</a></li>
       <li class="tab"><a class=" waves-effect waves-light " href="#tab3">ObjectCode.j</a></li>
     </ul>
-    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal lighten-3" style="right: 90px">
-      <i class="material-icons">build</i>
-    </a>
+      <div id="build-app">
+          <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal lighten-3" style="right: 90px"
+                v-on:click="build">
+              <i class="material-icons">build</i>
+          </a>
+      </div>
     <a class="btn-floating btn-large halfway-fab waves-effect waves-light red lighten-3" >
       <i class="material-icons">play_arrow</i>
     </a>
@@ -141,7 +144,7 @@ protected sj_class SmallJava {
       </div>
     </div>
   </div>
-</>
+</div>
 
 
 
@@ -150,9 +153,39 @@ protected sj_class SmallJava {
 <script src="js/materialize.js"></script>
 <script src="aceEditor/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
+<script src="js/vue.js"></script>
+<script src="js/axios.js"></script>
 <script src="js/init.js"></script>
 
+<script>
+    var buildapp = new Vue({
+        el: '#build-app',
+        data: {
+            quads:''
+        },
+        // define methods under the `methods` object
+        methods: {
+            build: function (event) {
+                axios
+                    .get('Build')
+                    .then(function (response) {
+                        this.quads = (response.data) ;
+                        editor2.setValue('');
+                        for (var i = 0; i < this.quads.quads.length; i++) {
+                            editor2.insert(this.quads.quads[i]+'\n');
+                        }
+                        editor3.setValue(this.quads.JVM.replace(/##/g,'\n'));
+                        editor3.insert('');
+                    });
 
+                M.toast({html: 'Programme a ete cmpiler avec sucsses!', classes: 'rounded teal '});
+
+               // editor2.setValue(this.quads.quads)
+
+            }
+        }
+    })
+</script>
 
 </body>
 </html>
