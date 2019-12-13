@@ -63,14 +63,19 @@
   <div class="row">
     <div class="col s12" >
       <div class="edit card" id="editor1">
-        function foo(items) {
-        var x = "All this is syntax highlighted";
-        var x = "All this is syntax highlighted";
-        var x = "All this is syntax highlighted";
-        var x = "All this is syntax highlighted";
-        var x = "All this is syntax highlighted";
-        return x;
-        }</div>
+import Small_Java.lang ;
+
+protected sj_class SmallJava {
+
+  MainSj{
+    sj_int x , z ;
+    sj_float  y  ;
+
+    x :=  x * 5 / 3.2 ;
+
+  }
+}
+      </div>
     </div>
   </div>
 </div>
@@ -107,26 +112,36 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="card light-blue lighten-3 ">
 
-  <div class="container light-blue lighten-3">
+    <div class="col s12 center-align teal-text "><i class="material-icons">laptop_mac</i>Output</div>
 
-          <div class="col s12 center-align teal-text "><i class="material-icons">laptop_mac</i>Output</div>
-
-      <div class="row">
-        <div class="col s12">
-          <div class="edit card" id="editorOutput">
-13-Dec-2019 00:22:52.564 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/home/temp/.IntelliJIdea2019.2/system/tomcat/Tomcat_9_0_291_AntlrExps_2
-13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/home/temp/IdeaProjects/AntlrExps/libs/apache-tomcat-9.0.29
-13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/home/temp/IdeaProjects/AntlrExps/libs/apache-tomcat-9.0.29/temp
-13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib]
-13-Dec-2019 00:22:52.995 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
-13-Dec-2019 00:22:53.051 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
-13-Dec-2019 00:22:53.070 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [892] milliseconds
-13-Dec-2019 00:22:53.161 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
-          </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="edit card" id="editorOutput">
+          13-Dec-2019 00:22:52.564 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line
+          argument: -Dcatalina.base=/home/temp/.IntelliJIdea2019.2/system/tomcat/Tomcat_9_0_291_AntlrExps_2
+          13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line
+          argument: -Dcatalina.home=/home/temp/IdeaProjects/AntlrExps/libs/apache-tomcat-9.0.29
+          13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line
+          argument: -Djava.io.tmpdir=/home/temp/IdeaProjects/AntlrExps/libs/apache-tomcat-9.0.29/temp
+          13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The APR
+          based Apache Tomcat Native library which allows optimal performance in production environments was not found
+          on the java.library.path: [/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib]
+          13-Dec-2019 00:22:52.995 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler
+          ["http-nio-8085"]
+          13-Dec-2019 00:22:53.051 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler
+          ["ajp-nio-8009"]
+          13-Dec-2019 00:22:53.070 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [892]
+          milliseconds
+          13-Dec-2019 00:22:53.161 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service
+          [Catalina]
         </div>
       </div>
+    </div>
   </div>
+</>
 
 
 

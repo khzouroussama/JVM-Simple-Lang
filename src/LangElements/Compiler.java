@@ -2,6 +2,7 @@ package LangElements;
 
 import JVMHelpers.JVMinst;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -32,8 +33,11 @@ public class Compiler {
 
     }
     public static void printQuads(){
-        for (int i = 0; i < Quads.size(); i++) System.out.println("  Q-"+i+":"+Quads.get(i));
+        System.out.println( Quads );
+    }
 
+    public static String getQuadJson(){
+        return "{ \"quads\" : " + Quads +"}";
     }
 
     public static boolean TScontains(String id){

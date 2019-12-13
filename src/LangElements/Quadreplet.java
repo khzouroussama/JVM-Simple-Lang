@@ -25,8 +25,7 @@ public class Quadreplet {
 
     @Override
     public String toString() {
-        return "" +
-                "" + Arrays.toString(elt);
+        return " [\""+elt[0]+"\" ,  \""+elt[1]+"\"  , \""+elt[2]+"\" , \""+elt[3]+"\"]";
     }
 
     public String[] get() {
