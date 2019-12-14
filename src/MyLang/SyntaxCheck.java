@@ -9,6 +9,7 @@ public class SyntaxCheck extends myLangBaseListener {
     // a shared variable that can be used between listners (Quad Maker // syntax check)
     // the actual exp type stored in typeOP1
     static Types typeOP1 , typesOP2 ;
+    boolean in_dec = false;
 
     int nbop = 0 ;
 
@@ -37,6 +38,11 @@ public class SyntaxCheck extends myLangBaseListener {
 
 
     @Override
+    public void enterDec(myLangParser.DecContext ctx) {
+        in_dec =true;
+    }
+
+    @Override
     public void exitDec(myLangParser.DecContext ctx) {
         for (myLangParser.AffectContext c:ctx.affect()) {
             if (! Compiler.TScontains(c.IDF().getText()))
@@ -60,7 +66,7 @@ public class SyntaxCheck extends myLangBaseListener {
                 ));
             else Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.VAR_DOUBLE_DEC , "var :"+ c.getText() ));
         }
-        super.exitDec(ctx);
+        in_dec =false;
     }
 
     @Override
@@ -107,6 +113,9 @@ public class SyntaxCheck extends myLangBaseListener {
     public void exitTerminal(myLangParser.TerminalContext ctx) {
 
         //System.out.println(ctx.start.getText() +"-"+ nbop);
+        if (getTokenType(ctx.start) == null && !in_dec)
+            Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.VAR_NOT_DEC , ctx.getText() ));
+
         if (nbop == 0)
             typeOP1 = getTokenType(ctx.start);
         if (nbop == 1 )
@@ -114,7 +123,7 @@ public class SyntaxCheck extends myLangBaseListener {
         nbop ++ ;
         if (nbop == 2 ) {
             typeOP1 = checkType() ; // mettre la resultat dans
-            if (typeOP1 == null) Compiler.compileERRS.add(
+            if (typeOP1 == null && getTokenType(ctx.start)!=null) Compiler.compileERRS.add(
                     new Err(ctx.start.getLine() , ErrTypes.VAR_INCOMPTATIBLE , ctx.getText() + " de type" + getTokenType(ctx.start)));
             nbop = 1 ;
         }

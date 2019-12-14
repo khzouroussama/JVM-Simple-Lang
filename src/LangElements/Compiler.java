@@ -44,7 +44,8 @@ public class Compiler {
         if (!compileERRS.isEmpty()) return "{ \"quads\" : [] , \"JVM\" : \"\", \"errs\" : " + Compiler.compileERRS + "}";
         else return "{ \"quads\" : " + Quads +"  ,"+
                 " \"JVM\" : " + '\"'+new JVMClassTemplate("Test" , Compiler.GenerateObjectCode(""),true,10).jasminJVM.replaceAll("\n","##").replaceAll("\"","\\\\\"") +'\"' +","+
-                " \"errs\" : " + Compiler.compileERRS +
+                " \"errs\" : " + Compiler.compileERRS +','+
+                " \"TS\" : " + Compiler.TS +
                 "}"
                 ;
     }

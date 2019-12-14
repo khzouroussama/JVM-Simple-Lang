@@ -49,6 +49,7 @@
             <li class="tab"><a class=" waves-effect waves-light active" href="#tab1">Programme.sj</a></li>
             <li class="tab"><a class=" waves-effect waves-light " href="#tab2">Quadreplet.quad</a></li>
             <li class="tab"><a class=" waves-effect waves-light " href="#tab3">ObjectCode.j</a></li>
+            <li class="tab"><a class=" waves-effect waves-light " href="#tab4">Table des Symboles</a></li>
         </ul>
         <div id="build-app">
             <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal lighten-3 tooltipped"
@@ -94,7 +95,7 @@ protected sj_class SmallJava {
 <div id="tab2" class="container">
     <div class="row">
         <div class="col s8 push-s2">
-            <div class="edit card">
+            <div class="edit card" style="height: 513px;overflow: auto">
                 <table class="centered highlight">
                     <thead>
                     <tr>
@@ -118,6 +119,36 @@ protected sj_class SmallJava {
         </div>
     </div>
 </div>
+<div id="tab4" class="container">
+    <div class="row">
+        <div class="col s8 push-s2">
+            <div class="edit card" style="height: 513px;overflow: auto">
+                <table class="centered highlight" >
+                    <thead>
+                    <tr>
+                        <th>num</th>
+                        <th>id</th>
+                        <th>type</th>
+                        <th>size</th>
+                        <th>declared</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="print-TS">
+                    <tr v-for="symb in ts[0]">
+                        <td>{{ symb.num }}</td>
+                        <td>{{ symb.id }}</td>
+                        <td>{{ symb.type }}</td>
+                        <td>{{ symb.size }}</td>
+                        <td>{{ symb.declared }}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="tab3" class="container">
     <div class="row">
@@ -132,7 +163,7 @@ protected sj_class SmallJava {
         <div class="col s12 center-align teal-text "><i class="material-icons">laptop_mac</i>Output</div>
         <div class="row">
             <div class="col s12">
-                <div class="edit card grey lighten-4" id="printOutput" style="padding: 10px">
+                <div class="edit card grey  lighten-4" id="printOutput" style="padding: 10px">
                     <div class="grey lighten-4" style="max-height: 200px;min-height:200px;overflow: auto">
                         <span v-if="compiled && outs[0].length == 0" class="teal-text text-lighten-2 left-align">
                             > Programme a ete compiler avec sucsses
@@ -177,6 +208,14 @@ protected sj_class SmallJava {
         }
         // define methods under the `methods` object
     );
+    var printTSApp = new Vue({
+            el: '#print-TS',
+            data: {
+                ts: []
+            }
+        }
+        // define methods under the `methods` object
+    );
 
     var outputApp = new Vue({
             el: '#printOutput',
@@ -203,9 +242,14 @@ protected sj_class SmallJava {
                         Vue.set(outputApp.outs,1,res.out.split('##') );
                         outputApp.run = true;
                         // TODO some Condition to toast
-                        M.toast({
-                            html: '<i class="material-icons">done_all</i> Build completed successfully  !', classes:' lighten-3  toastFix center-align'
-                        });
+                        if (outputApp.compiled && editor3.getValue()!='')
+                            M.toast({
+                                html: '<i class="material-icons">done_all</i> Build completed successfully  !', classes:' lighten-3  toastFix center-align'
+                            });
+                        else
+                            M.toast({
+                                html: '<i class="material-icons">error</i>You have to Build first  !......', classes:'yellow lighten-3 blue-grey-text toastFix center-align '
+                            });
                     }).catch(reason =>
                     M.toast({
                         html: '<i class="material-icons">not_interested</i> '+reason, classes: ' red lighten-3  toastFix'
@@ -231,6 +275,7 @@ protected sj_class SmallJava {
                       editor3.setValue(this.cis.JVM.replace(/##/g, '\n'));
                       Vue.set(printQuadsApp.quads,0,this.cis.quads);
                       Vue.set(outputApp.outs,0,this.cis.errs);
+                      Vue.set(printTSApp.ts,0,this.cis.TS);
                       outputApp.compiled = true;
                       // TODO some Condition to toast
                             M.toast({

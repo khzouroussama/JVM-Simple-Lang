@@ -88,12 +88,12 @@ public class Symbol {
 
     @Override
     public String toString() {
-        return "\nSymbol{" +
-                "num=" + num +
-                ", id='" + id + '\'' +
-                ", type=" + type +
-                ", size=" + size +
-                ", declared=" + declared +
+        return '{' +
+                "\"num\":" + num +
+                ", \"id\":\"" + id + '\"' +
+                ", \"type\":\"" + type +'\"'+
+                ", \"size\":" + size +
+                ", \"declared\":" + declared +
                 '}';
     }
 }
