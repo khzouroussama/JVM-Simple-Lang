@@ -1,0 +1,12 @@
+import Small_Java.lang ;
+
+protected sj_class SmallJava {
+
+    MainSj{
+        sj_int x , z ;
+        sj_float y ;
+
+        x := x * 5 / 3.2 ;
+    }
+}
+            

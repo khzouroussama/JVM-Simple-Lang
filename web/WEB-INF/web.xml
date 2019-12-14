@@ -7,8 +7,21 @@
         <servlet-name>AjaxBuild</servlet-name>
         <servlet-class>AjaxWebGuiServer.AjaxBuild</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AjaxRun</servlet-name>
+        <servlet-class>AjaxWebGuiServer.AjaxRun</servlet-class>
+    </servlet>
+    
+    
     <servlet-mapping>
         <servlet-name>AjaxBuild</servlet-name>
         <url-pattern>/Build</url-pattern>
     </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>AjaxRun</servlet-name>
+        <url-pattern>/Run</url-pattern>
+    </servlet-mapping>
+    
+
 </web-app>

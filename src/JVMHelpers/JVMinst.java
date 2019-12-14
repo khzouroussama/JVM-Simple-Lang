@@ -18,6 +18,7 @@ public class JVMinst {
         return instType.get(s.getType())+"store "+s.getNum();
     }
 
+    // TODO support for boolean types /string ...
     public static String load(Symbol s){
         if (s.is_cnst_())  return "ldc "+s.get_cnst_value_() ;
         else return instType.get(s.getType())+"load "+s.getNum();

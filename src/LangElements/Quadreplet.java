@@ -25,7 +25,7 @@ public class Quadreplet {
 
     @Override
     public String toString() {
-        return " [\""+elt[0]+"\" ,  \""+elt[1]+"\"  , \""+elt[2]+"\" , \""+elt[3]+"\"]";
+        return " [\""+elt[0].replaceAll("\"","\\\"")+"\" ,  \""+elt[1].replaceAll("\"","'")+"\"  , \""+elt[2].replaceAll("\"","'")+"\" , \""+elt[3].replaceAll("\"","'")+"\"]";
     }
 
     public String[] get() {

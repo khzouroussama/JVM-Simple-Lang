@@ -41,8 +41,10 @@ public class Compiler {
     }
 
     public static String getQuadJson(){
-        return "{ \"quads\" : " + Quads +"  ,"+
-                " \"JVM\" : " + '\"'+new JVMClassTemplate("Test" , Compiler.GenerateObjectCode(""),true,10).jasminJVM.replaceAll("\n","##") +'\"' +
+        if (!compileERRS.isEmpty()) return "{ \"quads\" : [] , \"JVM\" : \"\", \"errs\" : " + Compiler.compileERRS + "}";
+        else return "{ \"quads\" : " + Quads +"  ,"+
+                " \"JVM\" : " + '\"'+new JVMClassTemplate("Test" , Compiler.GenerateObjectCode(""),true,10).jasminJVM.replaceAll("\n","##").replaceAll("\"","\\\\\"") +'\"' +","+
+                " \"errs\" : " + Compiler.compileERRS +
                 "}"
                 ;
     }

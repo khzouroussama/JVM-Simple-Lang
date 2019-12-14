@@ -57,7 +57,9 @@
                 <i class="material-icons">build</i>
             </a>
             <a class="btn-floating btn-large halfway-fab waves-effect waves-light red lighten-3 tooltipped"
-               data-position="top" data-tooltip="Run">
+               data-position="top" data-tooltip="Run"
+               v-on:click="run"
+            >
                 <i class="material-icons">play_arrow</i>
             </a>
         </div>
@@ -74,18 +76,17 @@
 <div id="tab1" class="container">
     <div class="row">
         <div class="col s12">
-            <div class="edit card" id="editor1">
-                import Small_Java.lang ;
+            <div class="edit card" id="editor1">import Small_Java.lang ;
 
-                protected sj_class SmallJava {
+protected sj_class SmallJava {
 
-                MainSj{
-                sj_int x , z ;
-                sj_float y ;
+    MainSj{
+        sj_int x , z ;
+        sj_float y ;
 
-                x := x * 5 / 3.2 ;
-                }
-                }
+        x := x * 5 / 3.2 ;
+    }
+}
             </div>
         </div>
     </div>
@@ -121,54 +122,35 @@
 <div id="tab3" class="container">
     <div class="row">
         <div class="col s12">
-            <div class="edit card" id="editor3">
-                function foo(items) {
-                var x = "All this is syntax highlighted";
-                var x = "All this is syntax highlighted";
-                var x = "All this is syntax highlighted";
-                var x = "All this is syntax highlighted";
-                var x = "All this is syntax highlighted";
-                return x;
-                }
-            </div>
+            <div class="edit card" id="editor3">No Code yet ..</div>
         </div>
     </div>
 </div>
 
 <div class="container">
     <div class="card light-blue lighten-3 ">
-
         <div class="col s12 center-align teal-text "><i class="material-icons">laptop_mac</i>Output</div>
-
         <div class="row">
             <div class="col s12">
-                <div class="edit card" id="editorOutput">
-                    13-Dec-2019 00:22:52.564 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command
-                    line
-                    argument: -Dcatalina.base=/home/temp/.IntelliJIdea2019.2/system/tomcat/Tomcat_9_0_291_AntlrExps_2
-                    13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command
-                    line
-                    argument: -Dcatalina.home=/home/temp/IdeaProjects/AntlrExps/libs/apache-tomcat-9.0.29
-                    13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command
-                    line
-                    argument: -Djava.io.tmpdir=/home/temp/IdeaProjects/AntlrExps/libs/apache-tomcat-9.0.29/temp
-                    13-Dec-2019 00:22:52.565 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent
-                    The APR
-                    based Apache Tomcat Native library which allows optimal performance in production environments was
-                    not found
-                    on the java.library.path: [/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib]
-                    13-Dec-2019 00:22:52.995 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing
-                    ProtocolHandler
-                    ["http-nio-8085"]
-                    13-Dec-2019 00:22:53.051 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing
-                    ProtocolHandler
-                    ["ajp-nio-8009"]
-                    13-Dec-2019 00:22:53.070 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization
-                    in [892]
-                    milliseconds
-                    13-Dec-2019 00:22:53.161 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting
-                    service
-                    [Catalina]
+                <div class="edit card grey lighten-4" id="printOutput" style="padding: 10px">
+                    <div class="grey lighten-4" style="max-height: 200px;min-height:200px;overflow: auto">
+                        <span v-if="compiled && outs[0].length == 0" class="teal-text text-lighten-2 left-align">
+                            > Programme a ete compiler avec sucsses
+                            <br>
+                        </span>
+                        <%--errs will go here --%>
+                        <span v-if="compiled && outs[0].length != 0" class="teal-text text-lighten-2 left-align">
+                            <span class="red-text text-lighten-2 left-align" v-for="err in outs[0]" style="">
+                                {{ err }}<br>
+                            </span>
+                        </span>
+    <%--                        Outputs will go here--%>
+                        <span v-if="compiled && outs[0].length == 0 && run" class="left-align">
+                            <span class="blue-grey-text left-align" v-for="out in outs[1]" style="">
+                                {{ out }}<br>
+                            </span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,6 +178,18 @@
         // define methods under the `methods` object
     );
 
+    var outputApp = new Vue({
+            el: '#printOutput',
+            // outs[0] contains Errs , 1 contains output ( 0errs => output )
+            //TODO NO time for Vue.js !!!!
+            data: {
+                outs: [],
+                compiled : false,
+                run : false
+            }
+        }
+        // define methods under the `methods` object
+    );
     var buildapp = new Vue({
         el: '#build-app',
         data: {
@@ -203,25 +197,26 @@
         },
         // define methods under the `methods` object
         methods: {
+            run :function(event){
+                fetch('Run').then(res => res.json())
+                    .then( res => {
+                        Vue.set(outputApp.outs,1,res.out.split('##') );
+                        outputApp.run = true;
+                        // TODO some Condition to toast
+                        M.toast({
+                            html: '<i class="material-icons">done_all</i> Build completed successfully  !', classes:' lighten-3  toastFix center-align'
+                        });
+                    }).catch(reason =>
+                    M.toast({
+                        html: '<i class="material-icons">not_interested</i> '+reason, classes: ' red lighten-3  toastFix'
+                    }) )
+                ;
+            },
             build: function (event) {
-                // axios
-                //     .get('Build' , {
-                //       code : 'bla'
-                //     })
-                //     .then(function (response) {
-                //         this.cis = (response.data);
-                //         editor3.setValue(this.cis.JVM.replace(/##/g, '\n'));
-                //         Vue.set(printQuadsApp.quads,0,this.cis.quads);
-                //
-                //         M.toast({
-                //           html: '<i class="material-icons">done_all</i> Programme a ete compiler avec success!', classes: ' teal  lighten-3  toastFix'
-                //         });
-                //     }).catch(function (reason) {
-                //       M.toast({
-                //           html: '<i class="material-icons">not_interested</i> '+reason, classes: ' red lighten-3  toastFix'
-                //       }); }
-                // );
 
+                outputApp.run = false;
+                var usr_code = editor1.getValue();
+                usr_code = usr_code.replace('/\n/g','') ;
                 var headers = {
                     "Content-Type": "application/json",
                     "Access-Control-Origin": "*"
@@ -229,13 +224,22 @@
                 fetch('Build', {
                     method: 'POST',
                     headers: headers,
-                    body: JSON.stringify({code: editor1.getValue()})
+                    body:  usr_code ,
                 }).then(res => res.json())
                 .then( res => {
-                      this.cis = (res.data);
+                      this.cis = res;
                       editor3.setValue(this.cis.JVM.replace(/##/g, '\n'));
                       Vue.set(printQuadsApp.quads,0,this.cis.quads);
-                })
+                      Vue.set(outputApp.outs,0,this.cis.errs);
+                      outputApp.compiled = true;
+                      // TODO some Condition to toast
+                            M.toast({
+                              html: '<i class="material-icons">done_all</i> Programme a ete compiler avec '+(this.cis.errs.length)+' erreurs !', classes: ((this.cis.errs.length ===0)?'teal':'red')+' lighten-3  toastFix center-align'
+                            });
+                }).catch(reason =>
+                      M.toast({
+                          html: '<i class="material-icons">not_interested</i> '+reason, classes: ' red lighten-3  toastFix'
+                      }) )
                 ;
 
 
@@ -244,6 +248,8 @@
             }
         }
     })
+
+
 
 
 </script>
