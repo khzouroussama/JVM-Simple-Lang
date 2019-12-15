@@ -1,10 +1,13 @@
 package MyLang;
 
+import LangElements.*;
 import LangElements.Compiler;
-import LangElements.Quadreplet;
-import LangElements.Symbol;
+import org.apache.catalina.tribes.util.Arrays;
 
-import java.util.Stack;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.regex.MatchResult;
+import java.util.regex.Pattern;
 
 public class QuadMaker extends myLangBaseListener {
     private static int tmpNb = 0 ;
@@ -12,6 +15,9 @@ public class QuadMaker extends myLangBaseListener {
     private Stack<Integer> tmpStack = new Stack<>(){{push(0);}};
     private Stack<Quadreplet> ifStack = new Stack<>();
     private Stack<Quadreplet> elseStack = new Stack<>();
+
+    private Types[] outputTypes ;
+    private String[] outoutStrings ;
 
     public static void init(){
         tmpNb =0 ;
@@ -100,7 +106,95 @@ public class QuadMaker extends myLangBaseListener {
     }
 
 
+    private static Types[] outputType(String[] s){
+        Types[] t = new Types[s.length] ;
+        for (int i =0 ; i < s.length; i++ ) {
+            switch (s[i]){
+                case "%d" : t[i] = Types.INT; break;
+                case "%s" : t[i] = Types.STRING; break;
+                case "%f" : t[i] = Types.FLOAT; break;
+            }
+        }
+
+        return t;
+    }
+
+    @Override
+    public void exitOutput(myLangParser.OutputContext ctx) {
+        String txt2print = ctx.STRING().getText().substring(1,ctx.STRING().getText().length()-1);
+        String[] output = Pattern.compile("%[fds]")
+                .matcher(ctx.STRING().getText())
+                .results()
+                .map(MatchResult::group)
+                .toArray(String[]::new);
+
+        outoutStrings = txt2print.split("%[dfs]") ;
+        outputTypes = outputType(output);
+
+        for (Types t:
+             outputTypes) {
+            System.out.println(t + "-");
+        }
+
+        if (outputTypes.length != ctx.exp().size())
+            Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.BAD_FORMAT_IO, "Sj_out(...)"+outputTypes.length +"-"+ ctx.exp().size()));
+        else {
+            int printState = -1 ,startWith = -1 ;
+            if (txt2print.startsWith("%d") || txt2print.startsWith("%s") || txt2print.startsWith("%"))
+                printState = startWith = 1 ;
+            Collections.reverse(tmpStack);
+            if (! tmpStack.empty()) tmpStack.pop(); // get rid of stupid 0
+            for (int i = 0 , j = 0 ; i < ctx.exp().size() || j < outoutStrings.length  ; printState = -printState ){
+                if (printState ==1){
+                    if (i < ctx.exp().size() ) {
+                        if (ctx.exp(i).getChildCount() == 3) {
+                            //TODO rah ypeeki mor ma ypopi !!!
+                            if (checkType(  Compiler.TSget("#T"+tmpStack.peek()).getType() , outputTypes[i]) == null)
+                                Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.BAD_FORMAT_IO, "Sj_out(...)"+outputTypes[i] +""));
+                            else
+                                Compiler.Quads.add(Quadreplet.QuadBuilder("print","#T"+tmpStack.pop(),"",tmpStack.toString()));
+                        }
+                        else
+                            if (checkType(  Compiler.TSget(ctx.exp(i).getText()).getType() , outputTypes[i]) == null)
+                                Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.BAD_FORMAT_IO, "Sj_out(...)"+outputTypes[i] +""));
+                            else
+                                Compiler.Quads.add(Quadreplet.QuadBuilder("print",ctx.exp(i).getText(),"",""));
+                        i++;
+                    }
+                }
+                else if (j < outoutStrings.length) {
+                       while (outoutStrings[j].equals("") ) j++;
+                       Compiler.Quads.add(Quadreplet.QuadBuilder("printL","\""+outoutStrings[j++]+"\"","",""));
+                }
+            }
+
+
+        }
+
+
+    }
+
+    //                        if (checkType(  Compiler.TSget("#T"+tmpStack.peek()).getType() , outputTypes[i]) == null)
+//                        Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.BAD_FORMAT_IO, "Sj_out(...)"+outputTypes[i] +""));
+//                        else
+//
+//
+//                        if (checkType(  Compiler.TSget(ctx.exp(i).getText()).getType() , outputTypes[i]) == null)
+////                            Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.BAD_FORMAT_IO, "Sj_out(...)"+outputTypes[i] +""));
+////                        else
     public static int getTmpNb() {
         return tmpNb;
+    }
+
+
+
+    public Types checkType(Types typeOP1, Types typesOP2){
+            switch (typeOP1){
+                case INT: return ( typesOP2 == Types.INT )? Types.INT :  null ;
+                case FLOAT: return (typesOP2 == Types.FLOAT )? Types.FLOAT : null ;
+                case STRING:  return (typesOP2 == Types.STRING )? Types.STRING : null ;
+                case BOOLEAN: return (typesOP2 == Types.BOOLEAN )? Types.BOOLEAN : null ;
+            }
+        return null;
     }
 }

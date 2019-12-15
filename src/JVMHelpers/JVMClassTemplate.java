@@ -70,7 +70,41 @@ public class JVMClassTemplate {
             "    iload 1 \n"+
             "    ireturn \n"+
             ".end method \n"+
-            "\n";
+            "\n"+
+            "; void print(int) \n" +
+            ".method public static print(I)V \n" +
+            "    .limit locals 5 \n" +
+            "    .limit stack 5 \n" +
+            "    iload 0 \n" +
+            "    getstatic java/lang/System/out Ljava/io/PrintStream; \n" +
+            "    swap \n" +
+            "    invokevirtual java/io/PrintStream/print(I)V \n" +
+            "    return \n" +
+            ".end method\n" +
+            "\n" +
+            "; void print(float) \n" +
+            ".method public static print(F)V \n" +
+            "    .limit locals 5 \n" +
+            "    .limit stack 5 \n" +
+            "    fload 0 \n" +
+            "    getstatic java/lang/System/out Ljava/io/PrintStream; \n" +
+            "    swap \n" +
+            "    invokevirtual java/io/PrintStream/print(F)V \n" +
+            "    return \n" +
+            ".end method\n" +
+            "\n" +
+            "; void print(string)\n" +
+            ".method public static print(Ljava/lang/String;)V\n" +
+            "    .limit locals 5 \n" +
+            "    .limit stack 5 \n" +
+            "    aload 0\n" +
+            "    getstatic java/lang/System/out Ljava/io/PrintStream; \n" +
+            "    swap \n" +
+            "    invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V \n" +
+            "    return \n" +
+            ".end method"+
+            "\n"
+            ;
 
 
 

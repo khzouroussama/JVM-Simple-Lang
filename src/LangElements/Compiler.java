@@ -102,8 +102,8 @@ public class Compiler {
                     break;
                 case STRING:
                     // TODO String type support
-                    JVM_insts.add(";ldc \"\" \n");
-                    JVM_insts.add(";astore "+ symbol.getNum());
+                    JVM_insts.add("ldc \"\" ");
+                    JVM_insts.add("astore "+ symbol.getNum());
                     break;
             }
         }
@@ -115,16 +115,25 @@ public class Compiler {
             Quadreplet thisQuad = Quads.get(i);
             switch (thisQuad.get()[0]) {
                 case "+"  :
-                    JVM_insts.addAll(JVMinst.add( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
+                    JVM_insts.addAll(JVMinst.add( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
                     break;
                 case "-" :
-                    JVM_insts.addAll(JVMinst.sub( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
+                    JVM_insts.addAll(JVMinst.sub( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
                     break;
                 case "*" :
-                    JVM_insts.addAll(JVMinst.mul( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
+                    JVM_insts.addAll(JVMinst.mul( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
                     break;
                 case "/" :
-                    JVM_insts.addAll(JVMinst.div( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] )));
+                    JVM_insts.addAll(JVMinst.div( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
+                    break;
+                case "printL":
+                    JVM_insts.addAll(JVMinst.printL( thisQuad.get()[1]));
+                    break;
+                case "print":
+                    JVM_insts.addAll(JVMinst.print( TSget(thisQuad.get()[1]) ));
+                    break;
+                case ":=":
+                    JVM_insts.addAll(JVMinst.assigne(  TSget(thisQuad.get()[3])  ,TSget(thisQuad.get()[1])  ) );
                     break;
             }
         }

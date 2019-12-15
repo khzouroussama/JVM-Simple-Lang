@@ -8,6 +8,6 @@ public enum ErrTypes {
     BIB_SMALL_JAVA_IO,
     BIB_NOT_FOUND,
     CLASS_CAPITAL_START,
-    SYNT
-
+    SYNT,
+    BAD_FORMAT_IO
 }

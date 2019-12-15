@@ -36,6 +36,8 @@ public class AjaxRun extends HttpServlet {
                 response.getWriter().print("{ \"out\" : \""+output.toString().replaceAll("\n","##")+"\"}");
                 //System.exit(0);
             } else {
+                System.out.println("Fail!");
+                System.out.println(output);
                 //abnormal...
             }
 

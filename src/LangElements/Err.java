@@ -41,6 +41,9 @@ public class Err {
             case CLASS_CAPITAL_START:
                 errMsg += " "+context;
                 break;
+            case BAD_FORMAT_IO:
+                errMsg += " Format de IO errone :"+context;
+                break;
 
         }
         errMsg = "\"" + errMsg.replaceAll("\"","\\\\\"") + "\"" ;

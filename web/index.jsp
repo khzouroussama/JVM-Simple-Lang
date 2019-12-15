@@ -35,7 +35,7 @@
 
 <nav class="nav-extended  light-blue darken-2">
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo center"><i class="material-icons">code</i>SmallJava Editor</a>
+        <a href="#" class="brand-logo center">SmallJava <i class="material-icons" style="font-size: 24px">code</i> Editor</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href=""><i class="material-icons">search</i></a></li>
@@ -78,17 +78,19 @@
     <div class="row">
         <div class="col s12">
             <div class="edit card" id="editor1">import Small_Java.lang ;
+import Small_Java.io ;
 
 protected sj_class SmallJava {
 
     MainSj{
-        sj_int x , z ;
-        sj_float y ;
-
-        x := x * 5 / 3.2 ;
+        sj_int x := 5 , x2  ;
+        sj_float z := 5;
+        sj_string y := "Hello!";
+        x2:= 40;
+        x := x * 5.2 ;
+        sj_Out("%s \nla Valeur de variable x+x2 = %d \n est la valeur de z = %f", y, x+x2, z);
     }
-}
-            </div>
+}</div>
         </div>
     </div>
 </div>

@@ -9,10 +9,9 @@ public class SyntaxCheck extends myLangBaseListener {
     // a shared variable that can be used between listners (Quad Maker // syntax check)
     // the actual exp type stored in typeOP1
     static Types typeOP1 , typesOP2 ;
-    boolean in_dec = false;
+    //boolean in_dec = false;
 
     int nbop = 0 ;
-
 
     @Override
     public void exitS(myLangParser.SContext ctx) {
@@ -33,14 +32,9 @@ public class SyntaxCheck extends myLangBaseListener {
                 Compiler.TS.add(new Symbol("BIB1",null,10,true));
         else if (ctx.BIB().getText().equals("Small_Java.io") && !Compiler.TScontains("BIB2"))
             Compiler.TS.add(new Symbol("BIB2",null,10,true));
-        else Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.BIB_NOT_FOUND , "Bib <"+ctx.BIB().getText()+"> not found ."));
+        else if (!ctx.BIB().getText().matches("Small_Java.(io|lang)")) Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.BIB_NOT_FOUND , "Bib <"+ctx.BIB().getText()+"> not found ."));
     }
 
-
-    @Override
-    public void enterDec(myLangParser.DecContext ctx) {
-        in_dec =true;
-    }
 
     @Override
     public void exitDec(myLangParser.DecContext ctx) {
@@ -66,7 +60,7 @@ public class SyntaxCheck extends myLangBaseListener {
                 ));
             else Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.VAR_DOUBLE_DEC , "var :"+ c.getText() ));
         }
-        in_dec =false;
+
     }
 
     @Override
@@ -113,7 +107,7 @@ public class SyntaxCheck extends myLangBaseListener {
     public void exitTerminal(myLangParser.TerminalContext ctx) {
 
         //System.out.println(ctx.start.getText() +"-"+ nbop);
-        if (getTokenType(ctx.start) == null && !in_dec)
+        if (getTokenType(ctx.start) == null)
             Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.VAR_NOT_DEC , ctx.getText() ));
 
         if (nbop == 0)
@@ -140,6 +134,18 @@ public class SyntaxCheck extends myLangBaseListener {
         if (! Compiler.TScontains("BIB2") ) Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.BIB_SMALL_JAVA_IO ,"Bib <Small_Java.io> is required " ) );
     }
 
+    @Override
+    public void exitOutput(myLangParser.OutputContext ctx) {
+            typesOP2 = typeOP1 = null ;
+            nbop = 0;
+    }
+
+    @Override
+    public void exitIo_a(myLangParser.Io_aContext ctx) {
+            typesOP2 = typeOP1 = null ;
+            nbop = 0;
+    }
+
     /**
      * Tools
      */
@@ -152,7 +158,7 @@ public class SyntaxCheck extends myLangBaseListener {
         return null;
     }
 
-    Types checkType(){
+    public Types checkType(){
         if (typeOP1 == null) return null ;
         else
         switch (typeOP1){

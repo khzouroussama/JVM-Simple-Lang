@@ -46,9 +46,9 @@ terminal: IDF
         | TRUE | FALSE
         ;
 
-output : MC_OUT '(' STRING ',' (exp ',')* exp ')' PV ;
+output : MC_OUT '(' STRING ',' (exp io_a ',')* exp ')' PV ;
 input : MC_IN '(' exp ')' PV ;
-
+io_a : ;
 
 MC_CLASS : 'sj_class';
 
