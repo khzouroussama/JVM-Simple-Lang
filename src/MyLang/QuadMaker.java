@@ -148,7 +148,7 @@ public class QuadMaker extends myLangBaseListener {
                 if (printState ==1){
                     if (i < ctx.exp().size() ) {
                         if (ctx.exp(i).getChildCount() == 3) {
-                            //TODO rah ypeeki mor ma ypopi !!!
+                            //TODO rah ypeeki mor ma ypopii !!!
                             if (checkType(  Compiler.TSget("#T"+tmpStack.peek()).getType() , outputTypes[i]) == null)
                                 Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.BAD_FORMAT_IO, "Sj_out(...)"+outputTypes[i] +""));
                             else
