@@ -109,13 +109,17 @@ public class JVMinst {
         LinkedList<String> JVMinsts = new LinkedList<>();
 
             JVMinsts.add(load(s1));
-            if (s1.getType() == Types.INT )
+            if (s1.getType() == Types.INT &&  s2.getType() == Types.FLOAT )
                 JVMinsts.add("i2f");
 
             JVMinsts.add(load(s2));
-            if (s2.getType() == Types.INT )
+            if (s1.getType() == Types.FLOAT && s2.getType() == Types.INT )
                 JVMinsts.add("i2f");
-            JVMinsts.add("fdiv");
+
+            if (s1.getType() == Types.INT &&  s2.getType() == Types.INT )
+                JVMinsts.add("idiv");
+            else
+                JVMinsts.add("fdiv");
 
         JVMinsts.add(store(s3));
 

@@ -23,6 +23,7 @@ public class AjaxRun extends HttpServlet {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()));
 
+
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
@@ -33,10 +34,24 @@ public class AjaxRun extends HttpServlet {
                 System.out.println("Success!");
                 System.out.println(output);
 
-                response.getWriter().print("{ \"out\" : \""+output.toString().replaceAll("\n","##")+"\"}");
+                response.getWriter().print("{ \"out\" : \""+output.toString().replaceAll("\n","##")+"\" , \"runtime_err\" : false }");
                 //System.exit(0);
             } else {
                 System.out.println("Fail!");
+                reader = new BufferedReader(
+                        new InputStreamReader(process.getErrorStream()));
+                line =""; output = new StringBuilder("");
+                while ((line = reader.readLine()) != null) {
+                    output.append(line + "\n");
+                }
+
+                response.getWriter().print("{ \"out\" : \""+
+                        output.toString()
+                                .replaceAll("[\n]","##")
+                                .replaceAll("[\t]","    ")
+                                .replaceAll("\"","\\\\\"")+
+                        "\", \"runtime_err\": true } ");
+
                 System.out.println(output);
                 //abnormal...
             }

@@ -123,6 +123,11 @@ public class SyntaxCheck extends myLangBaseListener {
         }
     }
 
+    @Override
+    public void exitSi_a(myLangParser.Si_aContext ctx) {
+        typesOP2 = typeOP1 = null ;
+        nbop = 0;
+    }
 
     @Override
     public void enterOutput(myLangParser.OutputContext ctx) {

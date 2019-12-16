@@ -88,6 +88,8 @@ Label2:
     fstore 6
     ldc 0 
     istore 7
+    ldc 0 
+    istore 8
     ; start excution ... 
     ldc 5
     istore 2
@@ -120,7 +122,19 @@ Label2:
     invokestatic Test.print(Ljava/lang/String;)V
     fload 4
     invokestatic Test.print(F)V
-    ldc " \n"
+    ldc "\n"
+    invokestatic Test.print(Ljava/lang/String;)V
+    iload 2
+    ldc 5
+    iadd
+    istore 8
+    ldc "Hello1"
+    astore 5
+    ldc "Hello1"
+    astore 5
+    aload 5
+    invokestatic Test.print(Ljava/lang/String;)V
+    ldc " !!!\n"
     invokestatic Test.print(Ljava/lang/String;)V
     return        ; return from main
 .end method

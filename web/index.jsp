@@ -88,7 +88,16 @@ protected sj_class SmallJava {
         sj_string y := "Hello!";
         x2:= 40;
         x := x * 5.2 ;
-        sj_Out("%s \nla Valeur de variable x+x2 = %d \n est la valeur de z = %f", y, x+x2, z);
+        sj_Out("%s \nla Valeur de variable x+x2 = %d \n est la valeur de z = %f\n", y, x+x2, z);
+
+        si (x = 1) alors {
+            y := "Hello1" ;
+        }sinon{
+            y := "Hello1" ;
+        }
+
+        sj_Out("%s !!!\n", y);
+
     }
 }</div>
         </div>
@@ -166,7 +175,7 @@ protected sj_class SmallJava {
         <div class="row">
             <div class="col s12">
                 <div class="edit card grey  lighten-4" id="printOutput" style="padding: 10px">
-                    <div class="grey lighten-4" style="max-height: 200px;min-height:200px;overflow: auto">
+                    <div class="grey lighten-4" style="max-height: 200px;min-height:200px;overflow: auto" >
                         <span v-if="compiled && outs[0].length == 0" class="teal-text text-lighten-2 left-align">
                             > Programme a ete compiler avec sucsses
                             <br>
@@ -179,9 +188,10 @@ protected sj_class SmallJava {
                         </span>
     <%--                        Outputs will go here--%>
                         <span v-if="compiled && outs[0].length == 0 && run" class="left-align">
-                            <span class="blue-grey-text left-align" v-for="out in outs[1]" style="">
-                                {{ out }}<br>
-                            </span>
+                                <span class="blue-grey-text left-align" v-for="out in outs[1]" >
+                                    <pre v-if="runtime_err" class="red-text text-lighten-1" style="margin: 0">{{ out }}</pre>
+                                    <span v-if="!runtime_err">{{ out }}<br></span>
+                                </span>
                         </span>
                     </div>
                 </div>
@@ -221,12 +231,13 @@ protected sj_class SmallJava {
 
     var outputApp = new Vue({
             el: '#printOutput',
-            // outs[0] contains Errs , 1 contains output ( 0errs => output )
+            // outs[0] contains Errs , 1 contains output ( 0errs => output ) , 2 contain runtime err state
             //TODO NO time for Vue.js !!!!
             data: {
                 outs: [],
                 compiled : false,
-                run : false
+                run : false ,
+                runtime_err :false
             }
         }
         // define methods under the `methods` object
@@ -242,6 +253,7 @@ protected sj_class SmallJava {
                 fetch('Run').then(res => res.json())
                     .then( res => {
                         Vue.set(outputApp.outs,1,res.out.split('##') );
+                        outputApp.runtime_err = res.runtime_err;
                         outputApp.run = true;
                         // TODO some Condition to toast
                         if (outputApp.compiled && editor3.getValue()!='')
@@ -261,6 +273,7 @@ protected sj_class SmallJava {
             build: function (event) {
 
                 outputApp.run = false;
+                outputApp.runtime_err = false;
                 var usr_code = editor1.getValue();
                 usr_code = usr_code.replace('/\n/g','') ;
                 var headers = {

@@ -9,6 +9,15 @@ protected sj_class SmallJava {
         sj_string y := "Hello!";
         x2:= 40;
         x := x * 5.2 ;
-        sj_Out("%s \nla Valeur de variable x+x2 = %d \n est la valeur de z = %f \n", y, x+x2, z);
+        sj_Out("%s \nla Valeur de variable x+x2 = %d \n est la valeur de z = %f\n", y, x+x2, z);
+
+        si (x + 5) alors {
+            y := "Hello1" ;
+        }sinon{
+            y := "Hello1" ;
+        }
+
+        sj_Out("%s !!!\n", y);
+
     }
 }
