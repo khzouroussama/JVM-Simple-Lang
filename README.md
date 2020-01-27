@@ -1,5 +1,5 @@
 # JVM-min-Lang2
-a small java Compiler 
+a small java Compiler that run on the JVM
 
 ![exemple](exemple.png)
 
