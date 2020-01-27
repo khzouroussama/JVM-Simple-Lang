@@ -1,7 +1,7 @@
 # JVM-min-Lang2
 a small java Compiler 
 
-![Algorithm schema](exemple.png)
+![exemple](exemple.png)
 
 ## Technologies
 Project is created with:
