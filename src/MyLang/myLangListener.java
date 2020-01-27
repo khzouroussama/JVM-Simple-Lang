@@ -108,6 +108,36 @@ public interface myLangListener extends ParseTreeListener {
 	 */
 	void exitSi_b(myLangParser.Si_bContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link myLangParser#while_}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_(myLangParser.While_Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link myLangParser#while_}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_(myLangParser.While_Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link myLangParser#while_a}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_a(myLangParser.While_aContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link myLangParser#while_a}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_a(myLangParser.While_aContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link myLangParser#while_b}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_b(myLangParser.While_bContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link myLangParser#while_b}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_b(myLangParser.While_bContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link myLangParser#exp}.
 	 * @param ctx the parse tree
 	 */

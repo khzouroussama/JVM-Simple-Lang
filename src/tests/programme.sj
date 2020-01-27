@@ -1,23 +1,22 @@
 import Small_Java.lang ;
 import Small_Java.io ;
 
-protected sj_class SmallJava {
+protected sj_class PGCD {
 
     MainSj{
-        sj_int x := 5+-5 , x2  ;
-        sj_float z := 5;
-        sj_string y := "Hello!";
-        x2:= 40;
-        x := x * 5.2 ;
-        sj_Out("%s \nla Valeur de variable x+x2 = %d \n est la valeur de z = %f\n", y, x and x2, z);
+        sj_int a := 8, b  ;
+        b := 12 ;
 
-        si (x = 1) alors {
-            y := "Hello1" ;
-        }sinon{
-            y := "Hello1" ;
+        sj_Out("Le PGCD de %d et %d : \n->", a , b);
+
+        while (a != b) {
+            si (a > b) alors {
+                a := a - b ;
+            } sinon {
+                b := b - a ;
+            }
         }
-
-        sj_Out("%s !!!\n", y);
+        sj_Out("%d", a);
 
     }
 }

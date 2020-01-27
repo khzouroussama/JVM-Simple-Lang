@@ -84,61 +84,66 @@ Label2:
     istore 4
     ldc 0 
     istore 5
-    ldc 0.0
-    fstore 6
-    ldc "" 
-    astore 7
-    ldc 0.0
-    fstore 8
     ldc 0 
-    istore 9
+    istore 6
     ldc 0 
-    istore 10
+    istore 7
     ; start excution ... 
-    ldc -1
-    ldc 5
-    imul
+    ldc 8
     istore 2
-    ldc 5
-    iload 2
-    iadd
+    ldc 12
     istore 3
-    iload 3
-    istore 4
-    ldc 5
-    i2f
-    fstore 6
-    ldc "Hello!"
-    astore 7
-    ldc 40
-    istore 5
-    iload 4
-    i2f
-    ldc 5.2
-    fmul
-    fstore 8
-    fload 8
-    f2i
-    istore 4
-    aload 7
+    ldc "Le PGCD de "
     invokestatic Test.print(Ljava/lang/String;)V
-    ldc " \nla Valeur de variable x+x2 = "
-    invokestatic Test.print(Ljava/lang/String;)V
-    iload 9
+    iload 2
     invokestatic Test.print(I)V
-    ldc " \n est la valeur de z = "
+    ldc " et "
     invokestatic Test.print(Ljava/lang/String;)V
-    fload 6
-    invokestatic Test.print(F)V
-    ldc "\n"
+    iload 3
+    invokestatic Test.print(I)V
+    ldc " : \n->"
     invokestatic Test.print(Ljava/lang/String;)V
-    ldc "Hello1"
-    astore 7
-    ldc "Hello1"
-    astore 7
-    aload 7
-    invokestatic Test.print(Ljava/lang/String;)V
-    ldc " !!!\n"
-    invokestatic Test.print(Ljava/lang/String;)V
+    qlbl7:
+    iload 2
+    iload 3
+    if_icmpne lbcomp8
+    ldc 0
+    goto lbcomp9
+    lbcomp8:
+    ldc 1
+    lbcomp9:
+    istore 4
+    iload 4
+    ifeq qlbl17
+    iload 2
+    iload 3
+    if_icmpgt lbcomp10
+    ldc 0
+    goto lbcomp11
+    lbcomp10:
+    ldc 1
+    lbcomp11:
+    istore 5
+    iload 5
+    ifeq qlbl14
+    iload 2
+    iload 3
+    isub
+    istore 6
+    iload 6
+    istore 2
+    goto qlbl16
+    qlbl14:
+    iload 3
+    iload 2
+    isub
+    istore 7
+    iload 7
+    istore 3
+    qlbl16:
+    goto qlbl7
+    qlbl17:
+    iload 2
+    invokestatic Test.print(I)V
     return        ; return from main
 .end method

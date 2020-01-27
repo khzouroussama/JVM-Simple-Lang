@@ -10,6 +10,7 @@ inst : affect ';'
      | output
      | dec ';'
      | si
+     | while_
      ;
 
 dec : type ((affect ',' | IDF ',')* (affect|IDF) ) ;
@@ -21,6 +22,10 @@ affect : IDF ':=' exp ;
 si : 'si' '(' exp ')' si_a 'alors' '{' inst+ '}' si_b ('sinon' '{' inst+ '}' )? ;
 si_a : ; // HELPERS TO INSERT ROUTINS
 si_b : ; //
+
+while_ :'while' while_a '(' exp ')' while_b '{' inst+ '}';
+while_a:;
+while_b:;
 
 exp : MINUS exp
     | NOT exp
@@ -60,6 +65,7 @@ MC_IMPORT : 'import';
 MC_IF :   'si' ;
 MC_THENE :'alors';
 MC_ELSE : 'sinon';
+MC_WHILE : 'while';
 
 
 
@@ -82,7 +88,7 @@ DIV  :'/'  ;
 MOD  :'%'  ;
 // Compare
 EQ   :'=' ;
-NEQ  :'=/=';
+NEQ  :'!=';
 GT   :'>'  ;
 LT   :'<'  ;
 LET  :'<=' ;

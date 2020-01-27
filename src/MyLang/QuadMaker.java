@@ -16,6 +16,9 @@ public class QuadMaker extends myLangBaseListener {
     private Stack<Quadreplet> ifStack = new Stack<>();
     private Stack<Quadreplet> elseStack = new Stack<>();
 
+    private Stack<Integer> whileStartStack = new Stack<>();
+    private Stack<Quadreplet> whileStack = new Stack<>();
+
     private Types[] outputTypes ;
     private String[] outoutStrings ;
 
@@ -99,6 +102,7 @@ public class QuadMaker extends myLangBaseListener {
     }
 
 
+    // les routines de SI
     @Override
     public void exitSi_a(myLangParser.Si_aContext ctx) {
         Quadreplet ifQuad = Quadreplet.QuadBuilder("JZ","#T"+tmpStack.pop(),"","");
@@ -118,6 +122,28 @@ public class QuadMaker extends myLangBaseListener {
     public void exitSi(myLangParser.SiContext ctx) {
         elseStack.pop().set4(Compiler.Quads.size()+"");
     }
+
+    // les routines de WHILE
+
+    @Override
+    public void exitWhile_a(myLangParser.While_aContext ctx) {
+        whileStartStack.push(Compiler.Quads.size());
+    }
+
+    @Override
+    public void exitWhile_b(myLangParser.While_bContext ctx) {
+        Quadreplet whileQuad = Quadreplet.QuadBuilder("JZ","#T"+tmpStack.pop(),"","");
+        Compiler.Quads.add(whileQuad);
+        whileStack.push(whileQuad);
+    }
+
+    @Override
+    public void exitWhile_(myLangParser.While_Context ctx) {
+        Quadreplet whileQuadEND= Quadreplet.QuadBuilder("BR","","",whileStartStack.pop()+"") ;
+        Compiler.Quads.add(whileQuadEND);
+        whileStack.pop().set4(Compiler.Quads.size()+"");
+    }
+    // FIn routins de while
 
 
     private static Types[] outputType(String[] s){

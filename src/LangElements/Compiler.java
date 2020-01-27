@@ -26,6 +26,7 @@ public class Compiler {
         compileERRS = new LinkedList<>();
         Symbol.numSymbol = 0 ;
         QuadMaker.init();
+        JVMinst.labelNb = 0;
     }
 
     // Console printer
@@ -88,6 +89,7 @@ public class Compiler {
      * @return
      */
     public static LinkedList<String> GenerateObjectCode(String path){
+        LinkedList<Integer> quad_labels =new LinkedList<>();
 
         // JVM instructions ( as a start we will put every thing in the main )
         LinkedList<String> JVM_insts = new LinkedList<>();
@@ -98,6 +100,7 @@ public class Compiler {
             if (symbol.getType() != null)
             switch (symbol.getType()) {
                 case INT:
+                case BOOLEAN:
                     JVM_insts.add("ldc 0 ");
                     JVM_insts.add("istore "+ symbol.getNum());
                     break;
@@ -116,7 +119,14 @@ public class Compiler {
         JVM_insts.add("; start excution ... ");
         // now lets execute some Quads ...
 
+        for (int i = 0; i < Quads.size(); i++){
+            Quadreplet thisQuad = Quads.get(i);
+            if( thisQuad.get()[0].equals("BR") || thisQuad.get()[0].equals("JZ"))
+                quad_labels.add(Integer.parseInt(thisQuad.get()[3]));
+        }
+
         for (int i = 0; i < Quads.size(); i++) {
+            if (quad_labels.contains(i)) JVM_insts.add( "qlbl"+i+":" );
             Quadreplet thisQuad = Quads.get(i);
             switch (thisQuad.get()[0]) {
                 case "+"  :
@@ -143,26 +153,26 @@ public class Compiler {
                 case "MINUS":
                     JVM_insts.addAll(JVMinst.unary_minus(  TSget(thisQuad.get()[1])  ,TSget(thisQuad.get()[3])  ) );
                     break;
-                case "AND":
+                case "and":
                     JVM_insts.addAll(JVMinst.and( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
                     break;
-                case "OR":
+                case "or":
+                    JVM_insts.addAll(JVMinst.or( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
                     break;
-                case ">":
+                    // INStructions de comparison mettre la resultat de comparison dans
+                case ">":case ">=": case "<" : case "<=" :case "=" : case "!=" :
+                    JVM_insts.addAll(JVMinst.compare(thisQuad.get()[0] ,TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
                     break;
-                case ">=":
+                    //instruction de branchement
+                case "JZ" :
+                    JVM_insts.addAll( JVMinst.JZ(TSget(thisQuad.get()[1]) , Integer.parseInt(thisQuad.get()[3]) )) ;
                     break;
-                case "<":
-                    break;
-                case "<=":
-                    break;
-                case "=":
-                    break;
-                case "!=":
+                case "BR" :
+                    JVM_insts.add( "goto qlbl"+thisQuad.get()[3] );
                     break;
             }
-        }
 
+        }
 
         return JVM_insts;
     }

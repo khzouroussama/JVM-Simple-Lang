@@ -146,6 +146,12 @@ public class SyntaxCheck extends myLangBaseListener {
     }
 
     @Override
+    public void exitWhile_b(myLangParser.While_bContext ctx) {
+        typesOP2 = typeOP1 = null ;
+        nbop = 0;
+    }
+
+    @Override
     public void enterOutput(myLangParser.OutputContext ctx) {
         if (! Compiler.TScontains("BIB2") ) Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.BIB_SMALL_JAVA_IO ,"Bib <Small_Java.io> is required " ) );
     }
