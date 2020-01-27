@@ -43,33 +43,47 @@ public class QuadMaker extends myLangBaseListener {
     public void exitExp(myLangParser.ExpContext ctx) {
         // Quad Factory
         // create the qqquad using the state of the Exp Context
-        if ( ctx.getChildCount() == 3 ) {      // only exp with 3 children
+        if ( ctx.getChildCount() == 3 || ctx.getChildCount() == 2) {      // only exp with 3/2 children
             // Build an empty quad
             Quadreplet quad = Quadreplet.QuadBuilder();
             // update the quad operator
                  if (ctx.PLUS()  != null ) quad.set1("+");
-            else if (ctx.MINUS() != null ) quad.set1("-");
+            else if (ctx.MINUS() != null && ctx.getChildCount()==3) quad.set1("-");
+            else if (ctx.MINUS() != null && ctx.getChildCount() == 2) quad.set1("MINUS");
             else if (ctx.MUL()   != null ) quad.set1("*");
             else if (ctx.DIV()   != null ) quad.set1("/");
             else
-                 if (ctx.EQ()  != null ) quad.set1("=");
+                if (ctx.EQ()  != null ) quad.set1("=");
             else if (ctx.NEQ() != null ) quad.set1("!=");
             else if (ctx.GT()  != null ) quad.set1(">");
             else if (ctx.GET() != null ) quad.set1(">=");
             else if (ctx.LT()  != null ) quad.set1("<");
             else if (ctx.LET() != null ) quad.set1("<=");
+            else
+                if (ctx.AND() != null ) quad.set1("and");
+            else if (ctx.OR() != null ) quad.set1("or");
+            else if (ctx.NOT() != null ) quad.set1("not");
 
             else if (ctx.PAR_D() != null || ctx.PAR_D() != null) return; // do nothing
 
             //-----
-            if (ctx.getChild(0).getChildCount() == 1) {
-                quad.set2( ctx.getChild(0).getText() );
-            }
-            else quad.set2( "#T"+tmpStack.pop());
+            if (ctx.getChildCount() == 2 ){
+                // START WITH UNARY OPERATIONS
+                if (ctx.getChild(1).getChildCount() == 1) {
+                    quad.set2( ctx.getChild(1).getText() );
+                }
+                else quad.set2( "#T"+tmpStack.pop());
+                //TODO LOGICAL NOT
+            }else {
+                // BINARY OPERATIONS
+                if (ctx.getChild(0).getChildCount() == 1) {
+                    quad.set2(ctx.getChild(0).getText());
+                } else quad.set2("#T" + tmpStack.pop());
 
-            if (ctx.getChild(2).getChildCount() == 1) {
-                quad.set3( ctx.getChild(2).getText() );
-            }else  quad.set3( "#T"+tmpStack.pop());
+                if (ctx.getChild(2).getChildCount() == 1) {
+                    quad.set3(ctx.getChild(2).getText());
+                } else quad.set3("#T" + tmpStack.pop());
+            }
 
             // Always temp at the end of EXP
             quad.set4( "#T"+(tmpNb));

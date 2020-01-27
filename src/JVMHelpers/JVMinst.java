@@ -3,6 +3,7 @@ package JVMHelpers;
 import LangElements.Symbol;
 import LangElements.Types;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -170,6 +171,49 @@ public class JVMinst {
         return JVMinsts;
     }
 
+    public static LinkedList<String> unary_minus(Symbol s1 , Symbol s3){
+        LinkedList<String> JVMinsts = new LinkedList<>();
+
+        if (s1.getType() == Types.FLOAT ){
+            JVMinsts.add(load(Symbol._new_cnst_("-1.0")));
+            JVMinsts.add(load(s1));
+            JVMinsts.add("fmul");
+        }
+
+        if (s1.getType() == Types.INT  ){
+            JVMinsts.add(load(Symbol._new_cnst_("-1")));
+            JVMinsts.add(load(s1));
+            JVMinsts.add("imul");
+        }
+
+        JVMinsts.add(store(s3));
+
+        return JVMinsts;
+    }
 
 
+    public static LinkedList<String> and(Symbol s1 , Symbol s2 , Symbol s3){
+        LinkedList<String> JVMinsts = new LinkedList<>();
+
+        if (s1.getType() == Types.BOOLEAN || s2.getType() ==Types.BOOLEAN ){
+            JVMinsts.add(load(s1));
+            if (s1.getType() == Types.INT )
+                JVMinsts.add("i2f");
+
+            JVMinsts.add(load(s2));
+            if (s2.getType() == Types.INT )
+                JVMinsts.add("i2f");
+            JVMinsts.add("fadd");
+        }
+
+        if (s1.getType() == Types.INT && s2.getType() ==Types.INT ){
+            JVMinsts.add(load(s1));
+            JVMinsts.add(load(s2));
+
+        }
+        JVMinsts.add("iand");
+        JVMinsts.add(store(s3));
+
+        return JVMinsts;
+    }
 }

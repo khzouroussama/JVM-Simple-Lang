@@ -8,7 +8,7 @@ public class SyntaxCheck extends myLangBaseListener {
 
     // a shared variable that can be used between listners (Quad Maker // syntax check)
     // the actual exp type stored in typeOP1
-    static Types typeOP1 , typesOP2 ;
+    static Types typeOP1=null , typesOP2 =null;
     //boolean in_dec = false;
 
     int nbop = 0 ;
@@ -69,22 +69,37 @@ public class SyntaxCheck extends myLangBaseListener {
 //            System.out.println(ctx.getText()+"->is from dec");
 
         // TEST if this assigne is not from a declaration to Generate VAR_NOT_DEC
-        if (ctx.parent.getRuleContext() instanceof myLangParser.InstContext)
+        if (ctx.parent.getRuleContext() instanceof myLangParser.InstContext) {
             if (!Compiler.TScontains(ctx.IDF().getText())) {
                 Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.VAR_NOT_DEC, "var :" + ctx.IDF().getText()));
-                Compiler.TS.add(new Symbol(ctx.IDF().getText() ,null ,10 ));
+                // ajouter comme meme pour evite l affichage multiple d'erreur
+                Compiler.TS.add(new Symbol(ctx.IDF().getText(), null, 10));
+            }
+            // if exists dans TS
+            Types idfType = null;
+            if (Compiler.TScontains(ctx.IDF().getText())) {
+                idfType = Compiler.TSget(ctx.IDF().getText()).getType();
             }
 
-        Types idfType = null;
-        if (Compiler.TScontains(ctx.IDF().getText())) {
-            idfType = Compiler.TSget(ctx.IDF().getText()).getType();
-        }
-
-        if (idfType != null ){
-            typesOP2 = idfType ;
+            if (idfType != null ){
+                typesOP2 = idfType ;
+                System.out.println("op1_"+typeOP1+"||op2_"+typesOP2+"->>" + ctx.getText());
+                if (checkType() == null)
+                    Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.VAR_INCOMPTATIBLE , "var :"+ ctx.IDF().getText() ));
+            }
+        }else {
+            /*
+            ELSE IF IT S PARENT IS DECLARATION
+             */
+            typesOP2 = getType(((myLangParser.DecContext)ctx.parent).type().getText());
+            System.out.println("op1_"+typeOP1+"||op2_"+typesOP2+"->>" + ctx.getText());
             if (checkType() == null)
                 Compiler.compileERRS.add(new Err(ctx.start.getLine() , ErrTypes.VAR_INCOMPTATIBLE , "var :"+ ctx.IDF().getText() ));
+
         }
+
+
+
 
         typesOP2 = typeOP1 = null ;
         nbop = 0;
@@ -121,6 +136,7 @@ public class SyntaxCheck extends myLangBaseListener {
                     new Err(ctx.start.getLine() , ErrTypes.VAR_INCOMPTATIBLE , ctx.getText() + " de type" + getTokenType(ctx.start)));
             nbop = 1 ;
         }
+
     }
 
     @Override
@@ -175,6 +191,7 @@ public class SyntaxCheck extends myLangBaseListener {
         return null;
     }
 
+    // fonction magic donne le type si letteral sinon trouve son type dans le TS
     Types getTokenType(Token token){
         switch (token.getType()){
             case myLangParser.INT : return Types.INT;

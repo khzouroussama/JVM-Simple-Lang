@@ -26,7 +26,7 @@ public class AjaxBuild extends javax.servlet.http.HttpServlet {
         System.out.println(sb.toString() );
         // store the user input in the file  src/tests/programme.sj
         System.out.println(sb);
-        FileOutputStream outclass = new FileOutputStream("/home/temp/IdeaProjects/AntlrExps/src/tests/programme.sj");
+        FileOutputStream outclass = new FileOutputStream("/home/oussama/IdeaProjects/AntlrExps/src/tests/programme.sj");
         byte[] strToBytes = sb.toString().getBytes();
         outclass.write(strToBytes);
         outclass.close();

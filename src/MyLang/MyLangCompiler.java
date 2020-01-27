@@ -25,7 +25,7 @@ public class MyLangCompiler extends Compiler{
         Compiler compiler = new Compiler();
         // init compiler values
 
-        myLangLexer lexer = new myLangLexer(new ANTLRFileStream("/home/temp/IdeaProjects/AntlrExps/src/tests/programme.sj"));
+        myLangLexer lexer = new myLangLexer(new ANTLRFileStream("/home/oussama/IdeaProjects/AntlrExps/src/tests/programme.sj"));
         myLangParser parser = new myLangParser(new CommonTokenStream(lexer));
         // Start parsing
 
@@ -59,12 +59,12 @@ public class MyLangCompiler extends Compiler{
 
         //TODO save quads as json
 
-        FileOutputStream outclass = new FileOutputStream("/home/temp/IdeaProjects/AntlrExps/src/tests/quad.json");
+        FileOutputStream outclass = new FileOutputStream("/home/oussama/IdeaProjects/AntlrExps/src/tests/quad.json");
         byte[] strToBytes = Compiler.getQuadJson().getBytes();
         outclass.write(strToBytes);
         outclass.close();
         // save generated
-        outclass = new FileOutputStream("/home/temp/IdeaProjects/AntlrExps/src/tests/programmeObject.j");
+        outclass = new FileOutputStream("/home/oussama/IdeaProjects/AntlrExps/src/tests/programmeObject.j");
         strToBytes = JVMClassTemplate.jasminJVM.getBytes();
         outclass.write(strToBytes);
         outclass.close();

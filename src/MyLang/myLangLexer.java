@@ -1,4 +1,4 @@
-// Generated from /home/temp/IdeaProjects/AntlrExps/src/MyLang/myLang.g4 by ANTLR 4.7.2
+// Generated from /home/oussama/IdeaProjects/AntlrExps/src/MyLang/myLang.g4 by ANTLR 4.7.2
 package MyLang;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

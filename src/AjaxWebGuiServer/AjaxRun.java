@@ -16,7 +16,7 @@ public class AjaxRun extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // Run a shell script to generate class file and run it and send the output back
-            Process process = Runtime.getRuntime().exec("/home/temp/IdeaProjects/AntlrExps/src/tests/jasmin_run.sh");
+            Process process = Runtime.getRuntime().exec("/home/oussama/IdeaProjects/AntlrExps/src/tests/jasmin_run.sh");
 
             StringBuilder output = new StringBuilder();
 

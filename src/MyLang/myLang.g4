@@ -19,14 +19,14 @@ type: (MC_INT | MC_FLOAT | MC_STRING) ;
 affect : IDF ':=' exp ;
 
 si : 'si' '(' exp ')' si_a 'alors' '{' inst+ '}' si_b ('sinon' '{' inst+ '}' )? ;
-si_a : ; // HELPERS
+si_a : ; // HELPERS TO INSERT ROUTINS
 si_b : ; //
 
-exp : exp MUL exp
-    | exp DIV exp
+exp : MINUS exp
+    | NOT exp
     | exp MOD exp
-    | exp PLUS  exp
-    | exp MINUS exp
+    | exp (MUL|DIV) exp
+    | exp (PLUS | MINUS)  exp
     | exp AND exp
     | exp OR  exp
     | exp EQ  exp
@@ -35,8 +35,6 @@ exp : exp MUL exp
     | exp GET exp
     | exp GT  exp
     | exp LT  exp
-    | MINUS exp
-    | NOT exp
     | '(' exp ')'
     | terminal
     ;

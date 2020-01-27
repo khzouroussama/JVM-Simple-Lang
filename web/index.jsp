@@ -11,7 +11,7 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1.0" name="viewport"/>
-    <title>Rapport de TP ASGBD</title>
+    <title>SmallJava_COMPILER</title>
 
     <!-- CSS  -->
     <link href="css/materialize.css" media="screen,projection" rel="stylesheet" type="text/css"/>

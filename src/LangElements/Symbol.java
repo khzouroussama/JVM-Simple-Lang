@@ -14,7 +14,9 @@ public class Symbol {
     private String _cnst_value_ ;
 
     public static Symbol _new_cnst_(String _cnst_value_) {
-        return new Symbol("",isValue(_cnst_value_) ,10){{set_cnst_(true);set_cnst_value_(_cnst_value_);}};
+        return new Symbol("",isValue(_cnst_value_) ,10){{
+            set_cnst_(true);set_cnst_value_(_cnst_value_.equals("true")?"1":_cnst_value_.equals("false")?"0":_cnst_value_);
+        }};
     }
 
     public boolean is_cnst_() {
@@ -38,6 +40,7 @@ public class Symbol {
         if (Character.isDigit(s.charAt(0)))
             return (s.contains(".") ? Types.FLOAT : Types.INT );
         else if (s.startsWith("\"")) return Types.STRING ;
+        else if (s.equals("true") || s.equals("false")) return Types.BOOLEAN;
         return null;
     }
     //================================================================

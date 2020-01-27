@@ -40,6 +40,10 @@ public class Compiler {
         System.out.println( Quads );
     }
 
+    /*
+    REsults As JSON to use by the web client
+    The methode name is so wrong TODO change getQuadJson() methode name
+     */
     public static String getQuadJson(){
         if (!compileERRS.isEmpty()) return "{ \"quads\" : [] , \"JVM\" : \"\", \"errs\" : " + Compiler.compileERRS + "}";
         else return "{ \"quads\" : " + Quads +"  ,"+
@@ -75,10 +79,11 @@ public class Compiler {
 
 
 
-    // function that transforms Quadreplet into JVMAssembly ( via jasmin )
+
 
     /**
-     *
+     * function that transforms Quadreplet into JVMAssembly ( via JASMIN  )
+     * goto http://jasmin.sourceforge.net/ for information
      * @param path
      * @return
      */
@@ -134,6 +139,26 @@ public class Compiler {
                     break;
                 case ":=":
                     JVM_insts.addAll(JVMinst.assigne(  TSget(thisQuad.get()[3])  ,TSget(thisQuad.get()[1])  ) );
+                    break;
+                case "MINUS":
+                    JVM_insts.addAll(JVMinst.unary_minus(  TSget(thisQuad.get()[1])  ,TSget(thisQuad.get()[3])  ) );
+                    break;
+                case "AND":
+                    JVM_insts.addAll(JVMinst.and( TSget(thisQuad.get()[1])  , TSget(thisQuad.get()[2] ) ,TSget(thisQuad.get()[3]) ) );
+                    break;
+                case "OR":
+                    break;
+                case ">":
+                    break;
+                case ">=":
+                    break;
+                case "<":
+                    break;
+                case "<=":
+                    break;
+                case "=":
+                    break;
+                case "!=":
                     break;
             }
         }
