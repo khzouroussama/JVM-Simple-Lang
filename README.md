@@ -1,5 +1,5 @@
 # JVM Simple Lang
-a little language that runs on the JVM and uses Quadruples as an intermediate Code 
+a small programming language that runs on the JVM and uses Quadruples as an intermediate Code 
 
 ![exemple1](exemple1.png)
 ## Technologies
