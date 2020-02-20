@@ -35,7 +35,7 @@
 
 <nav class="nav-extended  light-blue darken-2">
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo center">SmallJava <i class="material-icons" style="font-size: 24px">code</i> Editor</a>
+        <a href="#" class="brand-logo center">SimpleLang <i class="material-icons" style="font-size: 24px">code</i> Editor</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href=""><i class="material-icons">search</i></a></li>
@@ -80,23 +80,22 @@
             <div class="edit card" id="editor1">import Small_Java.lang ;
 import Small_Java.io ;
 
-protected sj_class PGCD {
+protected class PGCD {
 
-    MainSj{
-        sj_int a := 8, b  ;
+    Main{
+        int a := 8, b  ;
         b := 12 ;
 
-        sj_Out("Le PGCD de %d et %d : \n->", a , b);
+        Out("Le PGCD de %d et %d : \n->", a , b);
 
         while (a != b) {
-            si (a > b) alors {
+            if (a > b) then {
                 a := a - b ;
-            } sinon {
+            } else {
                 b := b - a ;
             }
         }
-        sj_Out("%d", a);
-
+        Out("%d", a);
     }
 }</div>
         </div>
@@ -198,6 +197,9 @@ protected sj_class PGCD {
                 </div>
             </div>
         </div>
+    </div>
+    <div class="center-align blue-text">
+        Made by <a class="grey-text" href="https://github.com/khzouroussama/JVM-min-Lang2">Khezour Mohamed Oussama</a>
     </div>
 </div>
 

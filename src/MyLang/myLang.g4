@@ -1,6 +1,6 @@
 grammar myLang;
 
-s  : imports* ('protected'|'public')? MC_CLASS IDF '{' methode+ '}'  ;
+s  : imports* ('protected'|'public')? MC_CLASS IDF '{' (dec ';')* methode+ '}'  ;
 
 imports : MC_IMPORT BIB ';' ;
 methode : IDF '{' inst+ '}';
@@ -19,7 +19,7 @@ type: (MC_INT | MC_FLOAT | MC_STRING) ;
 
 affect : IDF ':=' exp ;
 
-si : 'si' '(' exp ')' si_a 'alors' '{' inst+ '}' si_b ('sinon' '{' inst+ '}' )? ;
+si : 'if' '(' exp ')' si_a 'then' '{' inst+ '}' si_b ('else' '{' inst+ '}' )? ;
 si_a : ; // HELPERS TO INSERT ROUTINS
 si_b : ; //
 
@@ -50,21 +50,22 @@ terminal: IDF
         ;
 
 output : MC_OUT '(' STRING ',' (exp io_a ',')* exp ')' PV ;
-input : MC_IN '(' exp ')' PV ;
+input : MC_IN '('  STRING ',' (exp io_b ',')* exp ')' PV ;
 io_a : ;
+io_b : ;
 
-MC_CLASS : 'sj_class';
+MC_CLASS : 'class';
 
-MC_INT :'sj_int' ;
-MC_FLOAT:'sj_float' ;
-MC_STRING :'sj_string' ;
-MC_IN:'sj_In';
-MC_OUT:'sj_Out';
+MC_INT :'int' ;
+MC_FLOAT:'float' ;
+MC_STRING :'string' ;
+MC_IN:'In';
+MC_OUT:'Out';
 MC_IMPORT : 'import';
 
-MC_IF :   'si' ;
-MC_THENE :'alors';
-MC_ELSE : 'sinon';
+MC_IF :   'if' ;
+MC_THENE :'then';
+MC_ELSE : 'else';
 MC_WHILE : 'while';
 
 

@@ -195,6 +195,7 @@ public class QuadMaker extends myLangBaseListener {
                                 Compiler.Quads.add(Quadreplet.QuadBuilder("print","#T"+tmpStack.pop(),"","" ) );
                         }
                         else
+                            if(Compiler.TSget(ctx.exp(i).getText()) != null)
                             if (checkType(  Compiler.TSget(ctx.exp(i).getText()).getType() , outputTypes[i]) == null)
                                 Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.BAD_FORMAT_IO, "Sj_out(...)"+outputTypes[i] +""));
                             else

@@ -1,5 +1,6 @@
 package MyLang;
 
+import AjaxWebGuiServer.AjaxBuild;
 import JVMHelpers.JVMClassTemplate;
 import LangElements.Err;
 import LangElements.ErrTypes;
@@ -8,12 +9,18 @@ import org.antlr.v4.runtime.*;
 import LangElements.Compiler;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.apache.catalina.core.ApplicationContext;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import java.io.*;
+import java.nio.file.Path;
 import java.util.BitSet;
 
 public class MyLangCompiler extends Compiler{
+
 
     public static void main(String[] args) throws Exception {
         Compile();
@@ -21,11 +28,13 @@ public class MyLangCompiler extends Compiler{
 
     public static void Compile() throws Exception{
 
+
         // init the compiler TS QUAD ERRS
         Compiler compiler = new Compiler();
         // init compiler values
 
-        myLangLexer lexer = new myLangLexer(new ANTLRFileStream("/home/oussama/IdeaProjects/AntlrExps/src/tests/programme.sj"));
+
+        myLangLexer lexer = new myLangLexer(new ANTLRFileStream(MyLangCompiler.class.getClassLoader().getResource("../../tests/programme.sj").getFile()));
         myLangParser parser = new myLangParser(new CommonTokenStream(lexer));
         // Start parsing
 
@@ -59,12 +68,12 @@ public class MyLangCompiler extends Compiler{
 
         //TODO save quads as json
 
-        FileOutputStream outclass = new FileOutputStream("/home/oussama/IdeaProjects/AntlrExps/src/tests/quad.json");
+        FileOutputStream outclass = new FileOutputStream(MyLangCompiler.class.getClassLoader().getResource("../../tests/quad.json").getFile());
         byte[] strToBytes = Compiler.getQuadJson().getBytes();
         outclass.write(strToBytes);
         outclass.close();
         // save generated
-        outclass = new FileOutputStream("/home/oussama/IdeaProjects/AntlrExps/src/tests/programmeObject.j");
+        outclass = new FileOutputStream(MyLangCompiler.class.getClassLoader().getResource("../../tests/programmeObject.j").getFile());
         strToBytes = JVMClassTemplate.jasminJVM.getBytes();
         outclass.write(strToBytes);
         outclass.close();

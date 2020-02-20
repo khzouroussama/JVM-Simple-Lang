@@ -227,6 +227,18 @@ public class myLangBaseListener implements myLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIo_a(myLangParser.Io_aContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIo_b(myLangParser.Io_bContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIo_b(myLangParser.Io_bContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

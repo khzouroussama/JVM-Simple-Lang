@@ -73,7 +73,7 @@ public class SyntaxCheck extends myLangBaseListener {
             if (!Compiler.TScontains(ctx.IDF().getText())) {
                 Compiler.compileERRS.add(new Err(ctx.start.getLine(), ErrTypes.VAR_NOT_DEC, "var :" + ctx.IDF().getText()));
                 // ajouter comme meme pour evite l affichage multiple d'erreur
-                Compiler.TS.add(new Symbol(ctx.IDF().getText(), null, 10));
+               // Compiler.TS.add(new Symbol(ctx.IDF().getText(), null, 10));
             }
             // if exists dans TS
             Types idfType = null;
@@ -178,9 +178,9 @@ public class SyntaxCheck extends myLangBaseListener {
      */
     Types getType(String type){
         switch (type){
-            case "sj_int": return Types.INT ;
-            case "sj_float": return Types.FLOAT ;
-            case "sj_string": return Types.STRING ;
+            case "int": return Types.INT ;
+            case "float": return Types.FLOAT ;
+            case "string": return Types.STRING ;
         }
         return null;
     }

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -16,8 +17,9 @@ public class AjaxRun extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // Run a shell script to generate class file and run it and send the output back
-            Process process = Runtime.getRuntime().exec("/home/oussama/IdeaProjects/AntlrExps/src/tests/jasmin_run.sh");
+            Process process = Runtime.getRuntime().exec(getServletContext().getRealPath("tests/jasmin_run.sh"),null, new File(getServletContext().getRealPath("tests")));
 
+            System.out.println();
             StringBuilder output = new StringBuilder();
 
             BufferedReader reader = new BufferedReader(
