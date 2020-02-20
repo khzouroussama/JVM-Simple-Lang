@@ -32,3 +32,6 @@ check http://jasmin.sourceforge.net/
 
 check the `exemples` folder
 
+## Note 
+##### tested on Linux Only !
+
