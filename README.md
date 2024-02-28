@@ -28,7 +28,7 @@ check http://jasmin.sourceforge.net/
 
 ![exemple4](exemple3.png)
 
-## Exemples
+## Examples
 
 check the `exemples` folder
 
